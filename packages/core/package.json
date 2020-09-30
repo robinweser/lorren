@@ -1,0 +1,59 @@
+{
+  "name": "@lorren/core",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib/**",
+    "es/**"
+  ],
+  "browserslist": [
+    "IE >= 11",
+    "Firefox >= 60",
+    "Safari >= 11.1",
+    "Chrome >= 66",
+    "ChromeAndroid >= 66",
+    "iOS >= 11.3",
+    "Edge >= 15"
+  ],
+  "scripts": {
+    "clean": "rimraf lib es coverage",
+    "deploy": "vercel --prod",
+    "build": "yarn clean && yarn build:package",
+    "build:package": "yarn build:es && yarn build:lib",
+    "build:es": "babel src --out-dir es --ignore \"src/__tests__\" --copy-files",
+    "build:lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --ignore \"src/__tests__\" --copy-files",
+    "watch": "npm run watch:lib & npm run watch:es",
+    "watch:lib": "BABEL_ENV=commonjs babel src -d lib -w",
+    "watch:es": "babel src -d es -w",
+    "test": "cross-env BABEL_ENV=commonjs echo 1",
+    "coverage": "yarn test --coverage"
+  },
+  "dependencies": {
+    "@react-pdf/renderer": "beta",
+    "date-fns": "^2.16.1",
+    "prop-types": "^15.7.2"
+  },
+  "peerDependencies": {
+    "react": "^16.7.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.7.4",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/preset-react": "^7.7.4",
+    "cross-env": "^6.0.3",
+    "jest": "^23.6.0",
+    "prettier": "^2.1.2",
+    "react": "^16.13.1",
+    "rimraf": "^3.0.0"
+  }
+}

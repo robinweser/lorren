@@ -1,0 +1,97 @@
+import React, { Children, Fragment } from 'react'
+import { View } from '@react-pdf/renderer'
+
+import Spacer from './Spacer'
+import applyMultiplier from '../theming/applyMultipier'
+import useTheme from '../theming/useTheme'
+
+export default function Box({
+  as: As = View,
+  style,
+  space,
+  padding,
+  paddingLeft,
+  paddingRight,
+  paddingBottom,
+  paddingTop,
+  margin,
+  marginLeft,
+  marginRight,
+  marginBottom,
+  marginTop,
+  height,
+  width,
+  grow,
+  shrink,
+  minWidth,
+  maxWidth,
+  minHeight,
+  maxHeight,
+  order,
+  alignContent,
+  justifyContent,
+  alignItems,
+  alignSelf,
+  flex,
+  basis,
+  direction,
+  display,
+  wrap,
+  children,
+  ...props
+}) {
+  const theme = useTheme()
+  const spacing = applyMultiplier(theme.baselineGrid)
+
+  return (
+    <As
+      {...props}
+      style={{
+        flexDirection: direction,
+        flexWrap: wrap,
+        flexGrow: grow,
+        flexShrink: shrink,
+        flexBasis: basis,
+        flex,
+        justifyContent,
+        alignContent,
+        alignItems,
+        alignSelf,
+        order,
+        maxWidth,
+        minWidth,
+        width,
+        maxHeight,
+        minHeight,
+        height,
+        padding: spacing(padding),
+        paddingLeft: spacing(paddingLeft),
+        paddingRight: spacing(paddingRight),
+        paddingBottom: spacing(paddingBottom),
+        paddingTop: spacing(paddingTop),
+        margin: spacing(margin),
+        marginLeft: spacing(marginLeft),
+        marginRight: spacing(marginRight),
+        marginBottom: spacing(marginBottom),
+        marginTop: spacing(marginTop),
+        ...style,
+      }}>
+      {space
+        ? Children.toArray(children).map((child, index, arr) => (
+            <Fragment key={index}>
+              {child}
+              {index === arr.length - 1 ? null : <Spacer size={space} />}
+            </Fragment>
+          ))
+        : children}
+    </As>
+  )
+}
+
+Box.defaultProps = {
+  grow: 0,
+  shrink: 0,
+  basis: 'auto',
+  alignItems: 'stretch',
+  wrap: 'nowrap',
+}

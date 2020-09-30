@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "name": "loren",
+  "repository": "https://github.com/robinweser/lorren.git",
+  "license": "MIT",
+  "scripts": {
+    "bootstrap": "lerna bootstrap --reject-cycles",
+    "cleanup": "lerna run clean && lerna clean --yes",
+    "build": "lerna run build",
+    "format": "prettier --write \"**/*.js\"",
+    "coverage": "lerna run coverage",
+    "release": "yarn build && lerna publish --force-publish",
+    "setup": "yarn bootstrap && yarn build",
+    "test": "lerna run test",
+    "check": "yarn run test",
+    "postinstall": "yarn build"
+  },
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "devDependencies": {
+    "lerna": "^3.6.0",
+    "prettier": "^1.15.3",
+    "rimraf": "^2.6.2"
+  }
+}
