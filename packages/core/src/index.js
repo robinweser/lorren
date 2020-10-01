@@ -3,10 +3,11 @@ import Text from './components/Text'
 import Spacer from './components/Spacer'
 import Line from './components/Line'
 import Image from './components/Image'
+import Note from './components/Note'
+import Link from './components/Link'
 import DateTime from './components/DateTime'
 import Currency from './components/Currency'
 import Fixed from './components/Fixed'
-import PageNumber from './components/PageNumber'
 import Source from './components/Source'
 import Document from './components/Document'
 import Page from './components/Page'
@@ -17,13 +18,14 @@ import useTheme from './theming/useTheme'
 import IndexProvider from './indexing/IndexProvider'
 import IndexReference from './indexing/IndexReference'
 import IndexTable from './indexing/IndexTable'
-import { IMAGE, SOURCE } from './indexing/indexTokens'
+import { IMAGE, SOURCE, LINK } from './indexing/indexTokens'
 
 import render from './rendering/render'
 import renderWithIndex from './rendering/renderWithIndex'
 
 const IMAGE_REFERENCE = IMAGE
 const SOURCE_REFERENCE = SOURCE
+const LINK_REFERENCE = LINK
 
 export {
   Box,
@@ -32,10 +34,11 @@ export {
   Document,
   Spacer,
   Image,
+  Link,
+  Note,
   DateTime,
   Currency,
   Fixed,
-  PageNumber,
   Source,
   Page,
   ThemeProvider,
@@ -47,4 +50,5 @@ export {
   renderWithIndex,
   IMAGE_REFERENCE,
   SOURCE_REFERENCE,
+  LINK_REFERENCE,
 }

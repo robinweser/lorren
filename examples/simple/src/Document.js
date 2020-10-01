@@ -4,6 +4,7 @@ import {
   Box,
   Image,
   Text,
+  Note,
   DateTime,
   Currency,
   Fixed,
@@ -58,8 +59,30 @@ export default function Document() {
           <Text intent="subheading">
             1.2. Zielsetzung und geplantes Vorgehen
           </Text>
+          <Note>Foo</Note>
           <Text intent="paragraph">Blablablabla</Text>
           <Currency>4.25</Currency>
+          <Text
+            style={{
+              color: "#bbbbbb66",
+              fontFamily: {
+                family: 'Bell Gothic',
+                src: 'https://liedgut.bdp-rps.app/fonts/Bell_Gothic.ttf',
+              },
+            }}>
+            Hello
+          </Text>
+          <Text
+            style={{
+              color: "rgb(255, 0, 0)",
+              fontFamily: {
+                family: 'Bell Gothic',
+                src: 'https://liedgut.bdp-rps.app/fonts/Bell_Gothic.ttf',
+              },
+            }}>
+            Hello
+          </Text>
+          <Text intent="quote">"Cooles Quote"</Text>
           <DateTime format="dd.MM.yyyy kk:mm" />
           <Source value="Hans Peter, 7. Auflage, Seite 1-15, https://www.foo.bar/baz">
             <Text>[1]</Text>

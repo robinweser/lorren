@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react'
+import React, { useEffect, createContext, useContext } from 'react'
 
 import ThemeContext from './ThemeContext'
 import defaultTheme from './defaultTheme'

@@ -5,9 +5,11 @@ import Spacer from './Spacer'
 import applyMultiplier from '../theming/applyMultipier'
 import useTheme from '../theming/useTheme'
 
+import processStyle from '../styling/processStyle'
+
 export default function Box({
   as: As = View,
-  style,
+  style: customStyle,
   space,
   padding,
   paddingLeft,
@@ -43,39 +45,41 @@ export default function Box({
   const theme = useTheme()
   const spacing = applyMultiplier(theme.baselineGrid)
 
+  const style = {
+    flexDirection: direction,
+    flexWrap: wrap,
+    flexGrow: grow,
+    flexShrink: shrink,
+    flexBasis: basis,
+    flex,
+    justifyContent,
+    alignContent,
+    alignItems,
+    alignSelf,
+    order,
+    maxWidth,
+    minWidth,
+    width,
+    maxHeight,
+    minHeight,
+    height,
+    padding: spacing(padding),
+    paddingLeft: spacing(paddingLeft),
+    paddingRight: spacing(paddingRight),
+    paddingBottom: spacing(paddingBottom),
+    paddingTop: spacing(paddingTop),
+    margin: spacing(margin),
+    marginLeft: spacing(marginLeft),
+    marginRight: spacing(marginRight),
+    marginBottom: spacing(marginBottom),
+    marginTop: spacing(marginTop),
+    ...customStyle,
+  }
+
+  const processedStyle = processStyle(style, theme)
+
   return (
-    <As
-      {...props}
-      style={{
-        flexDirection: direction,
-        flexWrap: wrap,
-        flexGrow: grow,
-        flexShrink: shrink,
-        flexBasis: basis,
-        flex,
-        justifyContent,
-        alignContent,
-        alignItems,
-        alignSelf,
-        order,
-        maxWidth,
-        minWidth,
-        width,
-        maxHeight,
-        minHeight,
-        height,
-        padding: spacing(padding),
-        paddingLeft: spacing(paddingLeft),
-        paddingRight: spacing(paddingRight),
-        paddingBottom: spacing(paddingBottom),
-        paddingTop: spacing(paddingTop),
-        margin: spacing(margin),
-        marginLeft: spacing(marginLeft),
-        marginRight: spacing(marginRight),
-        marginBottom: spacing(marginBottom),
-        marginTop: spacing(marginTop),
-        ...style,
-      }}>
+    <As {...props} style={processedStyle}>
       {space
         ? Children.toArray(children).map((child, index, arr) => (
             <Fragment key={index}>

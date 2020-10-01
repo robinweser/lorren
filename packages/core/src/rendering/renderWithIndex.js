@@ -13,7 +13,7 @@ export default function renderWithIndex(document, renderFn, path) {
   const segments = path.split('/')
   const indexPath = segments.slice(0, segments.length - 1).join('/')
 
-  return render(
+  render(
     <IndexProvider onDone={(index) => render(renderFn(index), path)}>
       <Document>
         {document}

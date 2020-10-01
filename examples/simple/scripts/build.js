@@ -13,7 +13,6 @@ import {
 
 import MyDocument from '../src/Document'
 import Wrapper from '../src/Wrapper'
-import { SOURCE } from '@lorren/core/lib/indexing/indexTokens'
 
 renderWithIndex(
   <MyDocument />,

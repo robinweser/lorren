@@ -4,6 +4,8 @@ import { Text as BaseText } from '@react-pdf/renderer'
 import IndexReference from '../indexing/IndexReference'
 import useTheme from '../theming/useTheme'
 
+import Box from './Box'
+
 export default function Text({
   children,
   intent,
@@ -28,7 +30,8 @@ export default function Text({
   } = theme.typography[intent]
 
   const text = (
-    <BaseText
+    <Box
+      as={BaseText}
       {...props}
       style={{
         ...fontStyle,
@@ -41,7 +44,7 @@ export default function Text({
         ...style,
       }}>
       {children}
-    </BaseText>
+    </Box>
   )
 
   if (reference) {

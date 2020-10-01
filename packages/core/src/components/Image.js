@@ -9,19 +9,16 @@ import { IMAGE } from '../indexing/indexTokens'
 import useConfig from '../configuration/useConfig'
 import useTheme from '../theming/useTheme'
 
-export default function Image({ description, style, height, width, ...props }) {
+export default function Image({ description, height, ...props }) {
   const { styles } = useTheme()
   const { renderers } = useConfig()
 
   const image = (
-    <BaseImage
+    <Box
+      as={BaseImage}
+      alignSelf={height ? 'flex-start' : undefined}
+      height={height}
       {...props}
-      style={{
-        alignSelf: height ? 'flex-start' : undefined,
-        height,
-        width,
-        ...style,
-      }}
     />
   )
 
