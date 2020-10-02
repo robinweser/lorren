@@ -1,6 +1,6 @@
-import Source from '../renderers/Source'
-import ImageDescription from '../renderers/ImageDescription'
-import ListItem from '../renderers/ListItem'
+import Source from './renderers/Source'
+import ImageDescription from './renderers/ImageDescription'
+import ListItem from './renderers/ListItem'
 
 export default {
   locale: 'en-US',
