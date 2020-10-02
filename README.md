@@ -4,20 +4,19 @@ A PDF Framework for React based on [react-pdf](https://react-pdf.org).
 
 ## ToDo
 
-- [ ] processStyle
+- [x] processStyle
   - [x] Font resolution
 - [x] Font support
   - [x] register
 - [ ] Browser rendering
-- [ ] Markdown component
 - [x] Box as Base for all components
-- [ ] PageContext
-  - [ ] passing down size and padding for automatic application
+- [x] PageContext
+  - [x] passing down size and padding for automatic application
 - [ ] Components
   - [ ] Markdown
-  - [ ] List
-  - [ ] ListItem
-  - [ ] Br
+  - [x] List
+  - [x] ListItem
+  - [x] Br
   - [x] Link
   - [ ] Header
   - [ ] Footer

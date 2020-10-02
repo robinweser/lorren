@@ -1,5 +1,6 @@
 import Source from '../renderers/Source'
 import ImageDescription from '../renderers/ImageDescription'
+import ListItem from '../renderers/ListItem'
 
 export default {
   locale: 'en-US',
@@ -9,5 +10,6 @@ export default {
   renderers: {
     source: Source,
     imageDescription: ImageDescription,
+    listItem: ListItem,
   },
 }

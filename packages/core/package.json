@@ -33,9 +33,9 @@
     "coverage": "yarn test --coverage"
   },
   "dependencies": {
-    "@lorren/react-noop-renderer": "^0.0.1",
     "@react-pdf/renderer": "beta",
     "date-fns": "^2.16.1",
+    "fast-loops": "^1.1.3",
     "prop-types": "^15.7.2",
     "react-test-renderer": "^16.13.1"
   },

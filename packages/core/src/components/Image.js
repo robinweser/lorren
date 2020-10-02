@@ -11,7 +11,7 @@ import useTheme from '../theming/useTheme'
 
 export default function Image({ description, height, ...props }) {
   const { styles } = useTheme()
-  const { renderers } = useConfig()
+  const { renderers: Renderers } = useConfig()
 
   const image = (
     <Box
@@ -27,7 +27,7 @@ export default function Image({ description, height, ...props }) {
       <IndexReference reference={description} type={IMAGE}>
         <Box style={styles.imageContainer}>
           {image}
-          {renderers.imageDescription(description)}
+          <Renderers.imageDescription description={description} />
         </Box>
       </IndexReference>
     )

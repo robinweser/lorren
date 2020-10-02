@@ -9,7 +9,7 @@ import useConfig from '../configuration/useConfig'
 const reference = []
 
 export default function Source({ value, children }) {
-  const { renderers } = useConfig()
+  const { renderers: Renderers } = useConfig()
   const { index } = useIndex()
 
   if (!value) {
@@ -21,11 +21,15 @@ export default function Source({ value, children }) {
     reference.push(value)
   }
 
-  const content = children
-    ? typeof children === 'function'
-      ? children(reference.indexOf(value) + 1)
-      : children
-    : renderers.source(reference.indexOf(value) + 1)
+  const content = children ? (
+    typeof children === 'function' ? (
+      children(reference.indexOf(value) + 1)
+    ) : (
+      children
+    )
+  ) : (
+    <Renderers.source reference={reference.indexOf(value) + 1} />
+  )
 
   return (
     <>

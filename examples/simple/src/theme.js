@@ -22,6 +22,7 @@ const fonts = {
 export default {
   colors,
   baselineGrid: 4,
+
   fonts,
   typography: {
     quote: {

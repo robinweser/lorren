@@ -15,6 +15,7 @@ export default function Text({
   color,
   height,
   style,
+  noReference,
   ...props
 }) {
   const theme = useTheme()
@@ -47,7 +48,7 @@ export default function Text({
     </Box>
   )
 
-  if (reference) {
+  if (!noReference && reference) {
     return (
       <IndexReference type={reference} reference={children}>
         {text}
