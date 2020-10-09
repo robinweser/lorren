@@ -23,7 +23,13 @@ export default function Document() {
       <Page padding="2cm">
         <Box>
           <Text intent="heading">1. Einleitung</Text>
-          <Text intent="subheading">1.1. Hinführung zum Thema</Text>
+          <Text intent="subheading">
+            1.1. Hinführung zum Thema<Text>Foo</Text>
+          </Text>
+
+          <Text>
+            Hello <Text>Hello</Text>
+          </Text>
           <Text intent="paragraph">
             Seit etwa zehn Jahren rückt eine bestimmte Plattform immer weiter in
             den Vordergrund. Es handelt sich um das mobile Endgerät, sprich

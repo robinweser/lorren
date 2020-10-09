@@ -14,6 +14,7 @@ import Fixed from './components/Fixed'
 import Source from './components/Source'
 import Document from './components/Document'
 import Page from './components/Page'
+import Markdown from './components/Markdown'
 
 import ThemeProvider from './theming/ThemeProvider'
 import useTheme from './theming/useTheme'
@@ -28,6 +29,8 @@ import { IMAGE, SOURCE, LINK } from './indexing/indexTokens'
 
 import render from './rendering/render'
 import renderWithIndex from './rendering/renderWithIndex'
+import PDFViewer from './rendering/PDFViewer'
+import PDFDownloadLink from './rendering/PDFDownloadLink'
 
 const IMAGE_REFERENCE = IMAGE
 const SOURCE_REFERENCE = SOURCE
@@ -50,6 +53,7 @@ export {
   Fixed,
   Source,
   Page,
+  Markdown,
   ThemeProvider,
   useTheme,
   ConfigProvider,
@@ -59,6 +63,8 @@ export {
   IndexTable,
   render,
   renderWithIndex,
+  PDFViewer,
+  PDFDownloadLink,
   IMAGE_REFERENCE,
   SOURCE_REFERENCE,
   LINK_REFERENCE,

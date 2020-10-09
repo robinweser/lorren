@@ -38,3 +38,10 @@ export default function Source({ value, children }) {
     </>
   )
 }
+
+Source.childOf = ['Page', 'Box', 'Text']
+Source.lorrenTypes = {
+  value: {
+    type: 'string',
+  },
+}

@@ -1,0 +1,104 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn build:lib
+
+PATH: 
+  /var/folders/hh/hyjcvz_s4qs4kflm61mmlywr0000gn/T/yarn--1601901176235-0.1772497151276251:/Users/weezer/Code/lorren/packages/composer/node_modules/.bin:/Users/weezer/.config/yarn/link/node_modules/.bin:/Users/weezer/Code/lorren/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/var/folders/hh/hyjcvz_s4qs4kflm61mmlywr0000gn/T/yarn--1601901175667-0.6215401187235077:/Users/weezer/Code/lorren/packages/composer/node_modules/.bin:/Users/weezer/.config/yarn/link/node_modules/.bin:/Users/weezer/Code/lorren/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/weezer/Code/lorren/packages/composer/node_modules/.bin:/Users/weezer/Code/lorren/packages/node_modules/.bin:/Users/weezer/Code/lorren/node_modules/.bin:/Users/weezer/Code/node_modules/.bin:/Users/weezer/node_modules/.bin:/Users/node_modules/.bin:/node_modules/.bin:/usr/local/bin:/var/folders/hh/hyjcvz_s4qs4kflm61mmlywr0000gn/T/yarn--1601901167381-0.4836444644706821:/Users/weezer/Code/lorren/node_modules/.bin:/Users/weezer/.config/yarn/link/node_modules/.bin:/Users/weezer/Code/lorren/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/var/folders/hh/hyjcvz_s4qs4kflm61mmlywr0000gn/T/yarn--1601901167077-0.8424892321856314:/Users/weezer/Code/lorren/node_modules/.bin:/Users/weezer/.config/yarn/link/node_modules/.bin:/Users/weezer/Code/lorren/node_modules/.bin:/usr/local/libexec/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/usr/local/bin/node_modules/npm/bin/node-gyp-bin:/Users/weezer/.yarn/bin:/Users/weezer/.config/yarn/global/node_modules/.bin:/Applications/MongoDB:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/texbin:/usr/bin/:/usr/local/go/bin
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  12.18.3
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: package.json: write EPIPE
+      at afterWriteDispatched (internal/stream_base_commons.js:154:25)
+      at writeGeneric (internal/stream_base_commons.js:145:3)
+      at Socket._writeGeneric (net.js:786:11)
+      at Socket._write (net.js:798:8)
+      at doWrite (_stream_writable.js:403:12)
+      at writeOrBuffer (_stream_writable.js:387:5)
+      at Socket.Writable.write (_stream_writable.js:318:11)
+      at ConsoleReporter.warn (/usr/local/lib/node_modules/yarn/lib/cli.js:96024:17)
+      at warn (/usr/local/lib/node_modules/yarn/lib/cli.js:51104:23)
+      at module.exports.exports.default (/usr/local/lib/node_modules/yarn/lib/cli.js:37084:7)
+
+npm manifest: 
+  {
+    "name": "@lorren/composer",
+    "version": "0.0.1",
+    "main": "lib/index.js",
+    "module": "es/index.js",
+    "sideEffects": false,
+    "publishConfig": {
+      "access": "public"
+    },
+    "files": [
+      "lib/**",
+      "es/**"
+    ],
+    "browserslist": [
+      "IE >= 11",
+      "Firefox >= 60",
+      "Safari >= 11.1",
+      "Chrome >= 66",
+      "ChromeAndroid >= 66",
+      "iOS >= 11.3",
+      "Edge >= 15"
+    ],
+    "scripts": {
+      "dev": "next dev",
+      "clean": "rimraf lib es coverage",
+      "build": "yarn clean && yarn build:package",
+      "build:package": "yarn build:es && yarn build:lib",
+      "build:es": "babel src --out-dir es --ignore \"src/__tests__\" --copy-files",
+      "build:lib": "cross-env BABEL_ENV=commonjs babel src --out-dir lib --ignore \"src/__tests__\" --copy-files",
+      "watch": "npm run watch:lib & npm run watch:es",
+      "watch:lib": "BABEL_ENV=commonjs babel src -d lib -w",
+      "watch:es": "babel src -d es -w",
+      "test": "cross-env BABEL_ENV=commonjs echo 1",
+      "coverage": "yarn test --coverage"
+    },
+    "dependencies": {
+      "@lorren/core": "^0.0.1",
+      "fast-loops": "^1.1.3",
+      "fela": "^11.4.0",
+      "fela-plugin-named-keys": "^11.4.0",
+      "fela-plugin-responsive-value": "^11.4.0",
+      "fela-preset-web": "^11.4.0",
+      "fela-sort-media-query-mobile-first": "^11.4.0",
+      "kilvin": "^2.0.10",
+      "next": "^9.5.3",
+      "prop-types": "^15.7.2",
+      "react-fela": "^11.4.0"
+    },
+    "peerDependencies": {
+      "react": "^16.7.0"
+    },
+    "devDependencies": {
+      "@babel/cli": "^7.11.6",
+      "@babel/core": "^7.11.6",
+      "@babel/node": "^7.7.4",
+      "@babel/plugin-proposal-class-properties": "^7.7.4",
+      "@babel/plugin-transform-runtime": "^7.7.6",
+      "@babel/polyfill": "^7.2.5",
+      "@babel/preset-env": "^7.7.6",
+      "@babel/preset-react": "^7.7.4",
+      "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+      "cross-env": "^6.0.3",
+      "jest": "^23.6.0",
+      "prettier": "^2.1.2",
+      "react": "^16.13.1",
+      "react-dom": "^16.13.1",
+      "rimraf": "^3.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

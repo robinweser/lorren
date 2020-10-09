@@ -4,9 +4,7 @@ export default {
     ident: 12,
     marker: '-',
   },
-  typography: {
-    body: {},
-  },
+  typography: {},
   styles: {
     imageContainer: {},
     lineContainer: {},

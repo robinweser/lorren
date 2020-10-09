@@ -5,12 +5,30 @@ import Text from './Text'
 
 import useConfig from '../configuration/useConfig'
 
-export default function DateTime({ children = Date.now(), format, ...props }) {
+export default function DateTime({
+  children = Date.now(),
+  value = children,
+  format,
+  ...props
+}) {
   const { dateTime } = useConfig()
 
-  return (
-    <Text {...props}>
-      {formatDateTime(new Date(children), format || dateTime)}
-    </Text>
-  )
+  let formatted
+  try {
+    formatted = formatDateTime(new Date(value), format || dateTime)
+  } catch (e) {}
+
+  return <Text {...props} text={formatted} />
+}
+
+DateTime.childOf = ['Page', 'Box', 'Text']
+DateTime.lorrenTypes = {
+  value: {
+    type: 'date',
+    initial: Date.now(),
+  },
+  format: {
+    type: 'string',
+    initial: 'yyyy-MM-dd',
+  },
 }

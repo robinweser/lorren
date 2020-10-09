@@ -33,11 +33,14 @@
     "coverage": "yarn test --coverage"
   },
   "dependencies": {
-    "@react-pdf/renderer": "beta",
+    "@lorren/react-pdf-renderer": "^0.0.1",
+    "@mdx-js/react": "^1.6.18",
+    "@mdx-js/runtime": "^1.6.18",
     "date-fns": "^2.16.1",
     "fast-loops": "^1.1.3",
     "prop-types": "^15.7.2",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "remark": "^12.0.1"
   },
   "peerDependencies": {
     "react": "^16.7.0"

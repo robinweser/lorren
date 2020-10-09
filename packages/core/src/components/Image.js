@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image as BaseImage } from '@react-pdf/renderer'
+import { Image as BaseImage } from '@lorren/react-pdf-renderer'
 
 import Box from './Box'
 
@@ -9,15 +9,20 @@ import { IMAGE } from '../indexing/indexTokens'
 import useConfig from '../configuration/useConfig'
 import useTheme from '../theming/useTheme'
 
-export default function Image({ description, height, ...props }) {
+export default function Image({ src, description, height, ...props }) {
   const { styles } = useTheme()
   const { renderers: Renderers } = useConfig()
+
+  if (!src) {
+    return null
+  }
 
   const image = (
     <Box
       as={BaseImage}
       alignSelf={height ? 'flex-start' : undefined}
       height={height}
+      src={src}
       {...props}
     />
   )
@@ -34,4 +39,25 @@ export default function Image({ description, height, ...props }) {
   }
 
   return image
+}
+
+Image.childOf = ['Page', 'View']
+Image.renderTreeInfo = (props) => (props.src ? props.src : '')
+Image.lorrenTypes = {
+  src: {
+    type: 'url',
+  },
+  description: {
+    type: 'string',
+  },
+  height: {
+    type: 'unit',
+  },
+  width: {
+    type: 'unit',
+  },
+  cache: {
+    type: 'boolean',
+    initial: true,
+  },
 }

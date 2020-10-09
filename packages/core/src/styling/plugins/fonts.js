@@ -1,4 +1,4 @@
-import { Font } from '@react-pdf/renderer'
+import { Font } from '@lorren/react-pdf-renderer'
 
 const fontCache = {}
 

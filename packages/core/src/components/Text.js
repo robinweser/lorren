@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text as BaseText } from '@react-pdf/renderer'
+import { Text as BaseText } from '@lorren/react-pdf-renderer'
 
 import IndexReference from '../indexing/IndexReference'
 import useTheme from '../theming/useTheme'
@@ -7,14 +7,21 @@ import useTheme from '../theming/useTheme'
 import Box from './Box'
 
 export default function Text({
+  text: content = '',
   children,
   intent,
   variant,
-  align,
-  weight,
+  fontSize,
+  textAlign,
+  fontWeight,
   color,
-  height,
-  style,
+  lineHeight,
+  letterSpacing,
+  textDecorationColor,
+  textDecorationStyle,
+  textDecoration,
+  fontStyle,
+  style: customStyle,
   noReference,
   ...props
 }) {
@@ -22,35 +29,44 @@ export default function Text({
 
   const {
     reference,
-    fontSize,
-    lineHeight,
-    fontWeight,
-    variants,
+    textAlign: defaultTextAlign,
+    fontSize: defaultFontSize,
+    lineHeight: defaultLineHeight,
+    fontWeight: defaultFontWeight,
+    letterSpacing: defaultLetterSpacing,
+    fontStyle: defaultFontStyle,
     color: defaultColor,
-    ...fontStyle
-  } = theme.typography[intent]
+    variants,
+    ...otherStyle
+  } = theme.typography[intent] || {}
+
+  const style = {
+    ...otherStyle,
+    display: 'inline-flex',
+    textDecorationColor,
+    textDecorationStyle,
+    textDecoration,
+    color: color || defaultColor,
+    textAlign: textAlign || defaultTextAlign,
+    fontWeight: fontWeight || defaultFontWeight,
+    lineHeight: lineHeight || defaultLineHeight,
+    letterSpacing: letterSpacing || defaultLetterSpacing,
+    fontSize: fontSize || defaultFontSize,
+    fontStyle: fontStyle || defaultFontStyle,
+    ...(variants && variants[variant] ? variants[variant] : {}),
+    ...customStyle,
+  }
 
   const text = (
-    <Box
-      as={BaseText}
-      {...props}
-      style={{
-        ...fontStyle,
-        color: color || defaultColor,
-        textAlign: align,
-        fontWeight: weight || fontWeight,
-        lineHeight: height || lineHeight,
-        fontSize,
-        ...(variants && variants[variant] ? variants[variant] : {}),
-        ...style,
-      }}>
+    <Box as={BaseText} {...props} style={style}>
+      {content}
       {children}
     </Box>
   )
 
   if (!noReference && reference) {
     return (
-      <IndexReference type={reference} reference={children}>
+      <IndexReference type={reference} reference={content || children}>
         {text}
       </IndexReference>
     )
@@ -61,4 +77,79 @@ export default function Text({
 
 Text.defaultProps = {
   intent: 'body',
-}
+  text: '',
+} 
+
+Text.childOf = ['Page', 'Box', 'Text']
+Text.renderTreeInfo = (props) => (props.text ? props.text : '')
+Text.lorrenTypes = (theme) => ({
+  text: {
+    type: 'string',
+    initial: '',
+    multiline: true,   variable: true
+  },
+  intent: {
+    type: 'select',
+    initial: 'body',
+    hidden: Object.keys(theme.typography).length === 0,
+    options: Object.keys(theme.typography || {}),
+  },
+  hyphenationCallback: {
+    type: 'integer',
+    initial: 600,
+  },
+  // fontFamily: {
+  //   type: "select"
+  //   // options: [""]
+  // },
+  color: {
+    type: 'color',
+  },
+  fontSize: {
+    type: 'integer',
+  },
+  fontStyle: {
+    type: 'select',
+    options: ['normal', 'italic', 'oblique'],
+  },
+
+  fontWeight: {
+    type: 'select',
+    options: [
+      'thin',
+      'ultralight',
+      'light',
+      'normal',
+      'medium',
+      'semibold',
+      'bold',
+      'ultrabold',
+      'heavy',
+    ],
+  },
+  letterSpacing: {
+    type: 'float',
+    step: 0.1,
+  },
+  lineHeight: {
+    type: 'float',
+    step: 0.1,
+  },
+  // "maxLines",
+  textAlign: {
+    type: 'select',
+    options: ['left', 'center', 'justify', 'right'],
+  },
+  textDecorationColor: {
+    type: 'string',
+  },
+  textDecorationStyle: {
+    type: 'select',
+    options: ['solid', 'double', 'dotted', 'dashed', 'wavy'],
+  },
+  textDecoration: {
+    type: 'select',
+    options: ['none', 'underline', 'line-through'],
+  },
+  ...Box.lorrenTypes,
+})

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text as BaseText } from '@react-pdf/renderer'
+import { Text as BaseText } from '@lorren/react-pdf-renderer'
 
 import useIndex from './useIndex'
 
