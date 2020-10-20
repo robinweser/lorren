@@ -24,7 +24,7 @@ export default function Document() {
         <Box>
           <Text intent="heading">1. Einleitung</Text>
           <Text intent="subheading">
-            1.1. Hinführung zum Thema<Text>Foo</Text>
+            1.1. Hinführung zum Thema<Text>Hello</Text>
           </Text>
 
           <Text>
@@ -147,7 +147,9 @@ export default function Document() {
             minHeight: 16,
             justifyContent: 'flex-end',
           }}>
-          {({ pageNumber, totalPages }) => pageNumber}
+          {({ pageNumber, totalPages, subPageNumber, subPageTotalPages }) =>
+            subPageNumber ? subPageNumber : ''
+          }
         </Fixed>
       </Page>
     </Wrapper>

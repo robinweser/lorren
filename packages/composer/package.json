@@ -44,7 +44,8 @@
     "kilvin": "^2.0.10",
     "next": "^9.5.3",
     "prop-types": "^15.7.2",
-    "react-fela": "^11.4.0"
+    "react-fela": "^11.4.0",
+    "shallow-equal": "^1.2.1"
   },
   "peerDependencies": {
     "react": "^16.7.0"

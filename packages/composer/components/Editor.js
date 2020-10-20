@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useRef, createElement } from 'react'
 import { unstable_batchedUpdates } from 'react-dom'
-import { PDFViewer, PDFDownloadLink, ThemeProvider } from '@lorren/core'
+import {
+  PDFViewer,
+  PDFDownloadLink,
+  ThemeProvider,
+  ConfigProvider,
+} from '@lorren/core'
 import { Box, Spacer } from 'kilvin'
 import { arrayMap, objectMap, objectReduce } from 'fast-loops'
 import { format as formatDateTime } from 'date-fns'
@@ -16,61 +21,18 @@ import {
   updateNodeDataProp,
   removeNodeDataProp,
 } from '../src/actions'
+import resolveLorrenTypes from '../src/resolveLorrenTypes'
+import getCleanData from '../src/getCleanData'
+import getDefaultData from '../src/getDefaultData'
+import getDataValues from '../src/getDataValues'
+import useDebounce from '../src/useDebounce'
 
 import PropInput from './PropInput'
 import Button from './Button'
+import Preview from './Preview'
+import Tree from './Tree'
 
-const useDebounce = (value, delay) => {
-  const [debouncedValue, setDebouncedValue] = useState(value)
-
-  useEffect(() => {
-    const handler = setTimeout(() => setDebouncedValue(value), delay)
-
-    return () => clearTimeout(handler)
-  }, [value])
-
-  return debouncedValue
-}
-
-function resolveLorrenTypes(lorrenTypes = {}, theme) {
-  if (typeof lorrenTypes === 'function') {
-    return lorrenTypes(theme)
-  }
-
-  return lorrenTypes
-}
-
-function injectData(nodeData, data, props) {
-  for (let prop in nodeData) {
-    if (data.hasOwnProperty(nodeData[prop])) {
-      props[prop] = data[nodeData[prop]]
-    }
-  }
-
-  return props
-}
-
-function getCleanData(data) {
-  return objectReduce(
-    data,
-    (cleanData, { value, ...rest }, name) => {
-      cleanData[name] = rest
-      return cleanData
-    },
-    {}
-  )
-}
-
-const supplementDataTypes = {
-  url: ['string'],
-  integer: ['string', 'float'],
-  float: ['string', 'float'],
-  date: ['string'],
-  color: ['string'],
-  unit: ['string'],
-}
-
-export default function Editor({ components, theme = {} }) {
+export default function Editor({ components, theme = {}, config = {} }) {
   const defaultNodes = {
     __root: createNode(
       'Document',
@@ -94,43 +56,21 @@ export default function Editor({ components, theme = {} }) {
   const [nodes, setNodes] = useState(defaultNodes)
   const [selected, setSelected] = useState(0)
   const [parent, setParent] = useState('__root')
-  const [
-    [clipboardNode, clipboardParent, clipboardCut],
-    setClipboard,
-  ] = useState([undefined, undefined, false])
   const [collapsed, setCollapsed] = useState({})
   const [id, setId] = useState(2)
   const [tab, setTab] = useState('preview')
   const [data, setData] = useState({})
-  const [dataProp, setDataProp] = useState('_')
-  const [dataBinding, setDataBinding] = useState(undefined)
+  const fileInputRef = useRef()
+  const [
+    [clipboardNode, clipboardParent, clipboardCut],
+    setClipboard,
+  ] = useState([undefined, undefined, false])
   const [addData, setAddData] = useState({
     name: '',
     type: 'string',
   })
-  const fileInputRef = useRef()
 
   useEffect(() => setMount(true), [])
-  useEffect(() => {
-    if (Object.keys(data).length > 0) {
-      const dataProp = Object.keys(data)[0]
-
-      setDataProp(dataProp)
-      setDataBinding(
-        Object.keys(lorrenTypes).filter(
-          (prop) =>
-            [
-              dataTypes[dataProp],
-              ...(supplementDataTypes[dataTypes[dataProp]] || []),
-            ].indexOf(lorrenTypes[prop].type) !== -1
-        )[0]
-      )
-    }
-  }, [data])
-
-  useEffect(() => {
-    setDataProp('_')
-  }, [selected])
 
   function addNodeByType(type) {
     const newId = id + 1
@@ -154,222 +94,17 @@ export default function Editor({ components, theme = {} }) {
     })
   }
 
-  function renderPDF(id = '__root') {
-    const { type, props: baseProps, children, data: nodeData } = nodes[id]
-
-    const lorrenTypes = resolveLorrenTypes(components[type].lorrenTypes, theme)
-
-    const props = objectReduce(
-      baseProps,
-      (props, value, prop) => {
-        if (
-          lorrenTypes[prop] &&
-          lorrenTypes[prop].variable &&
-          lorrenTypes[prop].type === 'string'
-        ) {
-          const resolvedValue = (value || '')
-            .toString()
-            .replace(/(\{\{([^\}]*)\}\})/gi, (match, _, name) => {
-              if (name.indexOf('date') === 0) {
-                const [variable, format] = name.substr(5).split(';')
-
-                try {
-                  return formatDateTime(
-                    new Date(dataValues[variable.trim()] || variable.trim()),
-                    format
-                  )
-                } catch (e) {}
-              }
-
-              if (name.indexOf('currency') === 0) {
-                const [
-                  variable,
-                  currency = 'EUR',
-                  locale = 'de-DE',
-                  thousandSeparator = true,
-                ] = name.substr(9).split(';')
-
-                try {
-                  const formatter = Intl.NumberFormat(locale, {
-                    style: 'currency',
-                    useGrouping: thousandSeparator !== 'false',
-                    currency: currency,
-                  })
-
-                  const value =
-                    dataValues[variable.trim()] || parseFloat(variable.trim())
-
-                  return formatter.format(value)
-                } catch (e) {}
-              }
-
-              return dataValues[name.trim()] || match
-            })
-
-          props[prop] = resolvedValue
-        } else {
-          props[prop] = value
-        }
-
-        return props
-      },
-      {}
-    )
-
-    if (
-      type === 'Text' &&
-      props.fixed &&
-      props.text &&
-      (props.text.indexOf('pageNumber') !== -1 ||
-        text.indexOf('totalPages') !== -1)
-    ) {
-      props.render = ({ pageNumber, totalPages }) => {
-        const dynamicData = {
-          pageNumber: pageNumber.toString(),
-          totalPages: totalPages ? totalPages.toString() : '',
-        }
-
-        return props.text.replace(
-          /(\{\{([^\}]*)\}\})/gi,
-          (match, _, name) => dynamicData[name.trim()] || match
-        )
-      }
-    }
-
-    return createElement(
-      components[type],
-      injectData(nodeData, dataValues, props),
-      children.length > 0 ? arrayMap(children, renderPDF) : props.children
-    )
-  }
-
-  function renderTree(id = '__root', parent) {
-    const { type, props, children } = nodes[id]
-    const component = components[type]
-
-    return (
-      <Box
-        extend={{
-          color: clipboardNode === id ? 'rgb(16, 146, 201)' : undefined,
-          opacity: clipboardNode === id && clipboardCut ? 0.3 : 1,
-        }}>
-        <Box as="span" direction="row" paddingBottom={1}>
-          <Box
-            direction="row"
-            alignItems="center"
-            extend={{
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              fontWeight: selected === id ? 700 : 400,
-            }}
-            onClick={(e) => {
-              e.stopPropagation()
-              unstable_batchedUpdates(() => {
-                setParent(parent)
-                setSelected(id)
-              })
-            }}>
-            {children.length === 0 ? (
-              <Box width={14} />
-            ) : (
-              <Box
-                paddingRight={1}
-                width={14}
-                extend={{ cursor: 'pointer' }}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  setCollapsed({
-                    ...collapsed,
-                    [id]: !collapsed[id],
-                  })
-                }}>
-                {collapsed[id] ? '+' : '-'}
-              </Box>
-            )}
-            <Box
-              as="span"
-              extend={{
-                overflow: 'hidden',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-              }}>
-              {props.__displayName}
-            </Box>
-
-            {component.renderTreeInfo ? (
-              <Box
-                as="span"
-                marginLeft={1.5}
-                grow={0}
-                shrink={1}
-                extend={{
-                  fontSize: 11,
-                  fontWeight: 400,
-                  marginTop: 1,
-                  color: 'rgb(150, 150, 150)',
-                  overflow: 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                }}>
-                {component.renderTreeInfo(props, theme)}
-              </Box>
-            ) : null}
-          </Box>
-        </Box>
-        {collapsed[id] ? null : (
-          <Box marginLeft={4}>
-            {arrayMap(children, (child) => renderTree(child, id))}
-          </Box>
-        )}
-      </Box>
-    )
-  }
+  const dataValues = getDataValues(data, timestamp)
 
   const selectedNode = nodes[selected]
   const selectedType = selectedNode.type
-
-  console.log(selectedType)
 
   const lorrenTypes = resolveLorrenTypes(
     components[selectedType].lorrenTypes,
     theme
   )
 
-  const dataTypes = objectReduce(
-    data,
-    (types, { type }, prop) => {
-      types[prop] = type === 'calculated' ? 'float' : type
-      return types
-    },
-    {}
-  )
-
-  dataTypes.timestamp = 'date'
-
-  const dataValues = objectReduce(
-    data,
-    (values, { type, value }, prop) => {
-      if (type === 'calculated') {
-        const replacedValue = objectReduce(
-          data,
-          (replaced, { value }, name) =>
-            replaced.replace(new RegExp(name, 'gi'), value),
-          value || ''
-        )
-
-        try {
-          values[prop] = eval(replacedValue)
-        } catch (e) {}
-      } else {
-        values[prop] = value
-      }
-
-      return values
-    },
-    {}
-  )
-
-  dataValues.timestamp = timestamp
+  const usedNodes = useDebounce(nodes, 500)
 
   return (
     <Box direction="row">
@@ -400,18 +135,10 @@ export default function Editor({ components, theme = {} }) {
 
                   setTimeout(
                     () => {
-                      setData(
-                        Object.keys(data).reduce((newData, name) => {
-                          newData[name] = data[name]
-                          if (data[name].default) {
-                            newData[name].value = data[name].default
-                          }
-
-                          return newData
-                        }, {})
-                      )
-                      setNodes(nodes)
-                      // setTimeout(() => setForceUpdate(Math.random()), 0);
+                      unstable_batchedUpdates(() => {
+                        setData(getDefaultData(data))
+                        setNodes(nodes)
+                      })
                     },
 
                     0
@@ -449,7 +176,7 @@ export default function Editor({ components, theme = {} }) {
                     )
                 )
 
-                const d = new Date(Date.now())
+                const d = new Date(timestamp)
                 const fileName = [
                   d.getFullYear(),
                   d.getMonth() + 1,
@@ -458,27 +185,15 @@ export default function Editor({ components, theme = {} }) {
                   d.getMinutes(),
                   d.getSeconds(),
                 ].join('-')
-                element.setAttribute('download', fileName + '.lorren')
 
+                element.setAttribute('download', fileName + '.lorren')
                 element.style.display = 'none'
                 document.body.appendChild(element)
-
                 element.click()
-
                 document.body.removeChild(element)
               }}>
               Download Template
             </Button>
-            {/* { didMount ? (
-              <PDFDownloadLink
-                key={timestamp}
-                style={{ color: 'white', textDecoration: 'none' }}
-                document={
-                  <ThemeProvider theme={theme}>{renderPDF()}</ThemeProvider>
-                }>
-                <Button>Download PDF</Button>
-              </PDFDownloadLink>
-            ) : null} */}
           </Box>
         </Box>
         <Box
@@ -545,7 +260,15 @@ export default function Editor({ components, theme = {} }) {
           <PDFViewer
             key={timestamp}
             style={{ height: '100%', width: '100%', border: 0 }}>
-            <ThemeProvider theme={theme}>{renderPDF()}</ThemeProvider>
+            <ThemeProvider theme={theme}>
+              <ConfigProvider config={config}>
+                <Preview
+                  nodes={usedNodes}
+                  components={components}
+                  data={dataValues}
+                />
+              </ConfigProvider>
+            </ThemeProvider>
           </PDFViewer>
         )}
         {tab !== 'data' ? null : (
@@ -560,15 +283,26 @@ export default function Editor({ components, theme = {} }) {
 
                 const { name, default: defaultValue, ...rest } = addData
 
-                setData({
-                  ...data,
+                if (addData.type === 'select') {
+                  setData((data) => ({
+                    ...data,
 
-                  [name]: {
-                    ...rest,
-                    default: defaultValue,
-                    value: defaultValue,
-                  },
-                })
+                    [name]: {
+                      ...rest,
+                      options: defaultValue.split(';'),
+                    },
+                  }))
+                } else {
+                  setData((data) => ({
+                    ...data,
+
+                    [name]: {
+                      ...rest,
+                      default: defaultValue,
+                      value: defaultValue,
+                    },
+                  }))
+                }
               }}>
               <Box
                 as="input"
@@ -598,6 +332,7 @@ export default function Editor({ components, theme = {} }) {
                 <option value="integer">Integer</option>
                 <option value="float">Float</option>
                 <option value="boolean">Boolean</option>
+                <option value="select">Select</option>
                 <option value="color">Color</option>
                 <option value="date">Date</option>
                 <option value="unit">Unit</option>
@@ -605,24 +340,39 @@ export default function Editor({ components, theme = {} }) {
                 <option value="calculated">Calculated</option>
               </select>
 
-              <PropInput
-                value={addData.default}
-                prop="Default"
-                type={addData.type}
-                setValue={(value) =>
-                  setAddData((addData) => ({
-                    ...addData,
-                    default: value,
-                  }))
-                }
-              />
+              {addData.type === 'select' ? (
+                <PropInput
+                  value={addData.default}
+                  prop="Options"
+                  type="string"
+                  setValue={(value) =>
+                    setAddData((addData) => ({
+                      ...addData,
+                      default: value,
+                    }))
+                  }
+                />
+              ) : (
+                <PropInput
+                  value={addData.default}
+                  prop="Default"
+                  type={addData.type}
+                  setValue={(value) =>
+                    setAddData((addData) => ({
+                      ...addData,
+                      default: value,
+                    }))
+                  }
+                />
+              )}
               <Button
                 submit
                 disabled={
                   !addData.name ||
                   addData.name === 'timestamp' ||
                   addData.name === 'pageNumber' ||
-                  addData.name === 'totalPages'
+                  addData.name === 'totalPages' ||
+                  (addData.type === 'select' && addData.default === '')
                 }>
                 Add
               </Button>
@@ -637,7 +387,7 @@ export default function Editor({ components, theme = {} }) {
               }}>
               {arrayMap(Object.keys(data), (name) => (
                 <Box
-                  key={name}
+                  key={name + data[name].type}
                   direction="row"
                   width="100%"
                   space={3}
@@ -654,23 +404,24 @@ export default function Editor({ components, theme = {} }) {
                           </Box>
                         </Box>
                       }
+                      {...data[name]}
                       type={data[name].type}
                       value={data[name].value}
                       setValue={(value) =>
-                        setData({
+                        setData((data) => ({
                           ...data,
                           [name]: {
                             ...data[name],
                             value,
                           },
-                        })
+                        }))
                       }
                     />
                   </Box>
                   <Button
                     variant="destructive"
                     onClick={() =>
-                      setData(
+                      setData((data) =>
                         objectReduce(
                           data,
                           (newData, value, key) => {
@@ -722,7 +473,30 @@ export default function Editor({ components, theme = {} }) {
           paddingBottom={1}
           paddingRight={1}
           extend={{ overflow: 'auto' }}>
-          {renderTree()}
+          <ThemeProvider theme={theme}>
+            <ConfigProvider config={config}>
+              <Tree
+                nodes={usedNodes}
+                components={components}
+                parent={parent}
+                clipboard={{ id: clipboardNode, cut: clipboardCut }}
+                selected={selected}
+                onSelect={(id, parent) =>
+                  unstable_batchedUpdates(() => {
+                    setParent(parent)
+                    setSelected(id)
+                  })
+                }
+                collapsed={collapsed}
+                onCollapse={(id) =>
+                  setCollapsed({
+                    ...collapsed,
+                    [id]: !collapsed[id],
+                  })
+                }
+              />
+            </ConfigProvider>
+          </ThemeProvider>
         </Box>
         <Box direction="row" padding={2} space={1.5}>
           <Button
@@ -848,52 +622,36 @@ export default function Editor({ components, theme = {} }) {
               )
             }
           />
-          <PropInput
-            prop="debug"
-            type="boolean"
-            value={selectedNode.props.debug}
-            setValue={(newValue) =>
-              setNodes((nodes) =>
-                updateNodeProp(nodes, selected, 'debug', newValue)
-              )
-            }
-          />
-          <PropInput
-            prop="break"
-            type="boolean"
-            value={selectedNode.props.break}
-            setValue={(newValue) =>
-              setNodes((nodes) =>
-                updateNodeProp(nodes, selected, 'break', newValue)
-              )
-            }
-          />
-          <PropInput
-            prop="fixed"
-            type="boolean"
-            value={selectedNode.props.fixed}
-            setValue={(newValue) =>
-              setNodes((nodes) =>
-                updateNodeProp(nodes, selected, 'fixed', newValue)
-              )
-            }
-          />
+          {lorrenTypes.hasOwnProperty('debug') && (
+            <PropInput
+              prop="debug"
+              type="boolean"
+              value={selectedNode.props.debug}
+              setValue={(newValue) =>
+                setNodes((nodes) =>
+                  updateNodeProp(nodes, selected, 'debug', newValue)
+                )
+              }
+            />
+          )}
+
           <Spacer size={3} />
-          {arrayMap(Object.keys(lorrenTypes), (prop) =>
-            lorrenTypes[prop].hidden ? null : (
-              <PropInput
-                key={prop + selected}
-                {...lorrenTypes[prop]}
-                disabled={selectedNode.data.hasOwnProperty(prop)}
-                prop={prop}
-                value={selectedNode.props[prop]}
-                setValue={(newValue) =>
-                  setNodes((nodes) =>
-                    updateNodeProp(nodes, selected, prop, newValue)
-                  )
-                }
-              />
-            )
+          {arrayMap(
+            Object.keys(lorrenTypes).filter((type) => type !== 'debug'),
+            (prop) =>
+              lorrenTypes[prop].hidden ? null : (
+                <PropInput
+                  key={prop + selected}
+                  {...lorrenTypes[prop]}
+                  prop={prop}
+                  value={selectedNode.props[prop]}
+                  setValue={(newValue) =>
+                    setNodes((nodes) =>
+                      updateNodeProp(nodes, selected, prop, newValue)
+                    )
+                  }
+                />
+              )
           )}
         </Box>
       </Box>

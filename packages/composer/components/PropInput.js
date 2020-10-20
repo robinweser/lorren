@@ -3,7 +3,6 @@ import { Box } from 'kilvin'
 
 function resize(el) {
   el.style.height = 0 + 'px'
-
   el.style.height = el.scrollHeight + 10 + 'px'
 }
 
@@ -14,7 +13,7 @@ function PropInput({
   initial,
   prop,
   empty = true,
-  disabled = false,
+  hidden = false,
   step = 1,
   value = '',
   setValue,
@@ -27,15 +26,15 @@ function PropInput({
     }
   }, [])
 
+  if (hidden) {
+    return null
+  }
+
   let input
 
   if (type === 'select') {
     input = (
-      <Box
-        as="select"
-        disabled={disabled}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}>
+      <Box as="select" value={value} onChange={(e) => setValue(e.target.value)}>
         {!empty ? null : <Box as="option" value="" />}
         {options.map((option) => (
           <Box as="option" value={option}>
@@ -47,7 +46,6 @@ function PropInput({
   } else if (type === 'boolean') {
     input = (
       <Box
-        disabled={disabled}
         type="checkbox"
         as="input"
         checked={value}
@@ -57,7 +55,6 @@ function PropInput({
   } else if (type === 'integer' || type === 'float') {
     input = (
       <Box
-        disabled={disabled}
         type="number"
         as="input"
         step={step}
@@ -89,7 +86,6 @@ function PropInput({
           }
         />
         <Box
-          disabled={disabled}
           as="select"
           value={unit}
           onChange={(e) => setValue(numberPart + e.target.value)}>
@@ -106,7 +102,6 @@ function PropInput({
   } else if (multiline) {
     input = (
       <Box
-        disabled={disabled}
         as="textarea"
         value={value}
         ref={inputRef}
@@ -120,7 +115,6 @@ function PropInput({
   } else {
     input = (
       <Box
-        disabled={disabled}
         as="input"
         value={value}
         onChange={(e) => setValue(e.target.value)}

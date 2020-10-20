@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
-  Page as PDFPage,
+  Page as LorrenPage,
   Document,
   PDFViewer,
-  Box,
+  Box as LorrenBox,
   Text,
   Currency,
   Line,
@@ -13,13 +13,14 @@ import {
   Spacer,
   Markdown,
 } from '@lorren/core'
+import { Box } from 'kilvin'
 
-import Editor from '../components/Editor'
+import Forms from '../components/Forms'
 
 const components = {
-  Page: PDFPage,
+  Page: LorrenPage,
   Document,
-  Box,
+  Box: LorrenBox,
   Text,
   Currency,
   Line,
@@ -105,6 +106,8 @@ const theme = {
   },
 }
 
-export default function Page() {
-  return <Editor components={components} theme={theme} />
-}
+export default () => (
+  <Box padding={20}>
+    <Forms components={components} theme={theme} />
+  </Box>
+)

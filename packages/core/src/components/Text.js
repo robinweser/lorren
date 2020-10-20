@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text as BaseText } from '@lorren/react-pdf-renderer'
+import { objectFilter } from 'fast-loops'
 
 import IndexReference from '../indexing/IndexReference'
 import useTheme from '../theming/useTheme'
@@ -78,15 +79,31 @@ export default function Text({
 Text.defaultProps = {
   intent: 'body',
   text: '',
-} 
+}
 
 Text.childOf = ['Page', 'Box', 'Text']
 Text.renderTreeInfo = (props) => (props.text ? props.text : '')
+
+const blackListProps = [
+  'direction',
+  'justifyContent',
+  'alignItems',
+  'alignContent',
+  'wrap',
+  'space',
+]
+
+const usedBoxTypes = objectFilter(
+  Box.lorrenTypes,
+  (_, key) => blackListProps.indexOf(key) === -1
+)
+
 Text.lorrenTypes = (theme) => ({
   text: {
     type: 'string',
     initial: '',
-    multiline: true,   variable: true
+    multiline: true,
+    variable: true,
   },
   intent: {
     type: 'select',

@@ -43,6 +43,7 @@ export default function Box({
   right,
   grow,
   shrink,
+  flexWrap,
   minWidth,
   maxWidth,
   minHeight,
@@ -55,7 +56,13 @@ export default function Box({
   flex,
   basis,
   direction,
-  wrap,
+  color,
+  fontSize,
+  fontStyle,
+  fontWeight,
+  letterSpacing,
+  lineHeight,
+  textAlign,
   children,
   ...props
 }) {
@@ -64,7 +71,7 @@ export default function Box({
 
   const style = {
     flexDirection: direction,
-    flexWrap: wrap,
+    flexWrap,
     flexGrow: grow,
     flexShrink: shrink,
     flexBasis: basis || 'auto',
@@ -74,6 +81,13 @@ export default function Box({
     alignItems,
     alignSelf,
     order,
+    color,
+    fontSize,
+    fontStyle,
+    fontWeight,
+    letterSpacing,
+    lineHeight,
+    textAlign,
     maxWidth,
     minWidth,
     width,
@@ -133,11 +147,59 @@ Box.defaultProps = {
   basis: 'auto',
   alignItems: 'stretch',
   direction: 'column',
-  wrap: 'nowrap',
+  flexWrap: 'nowrap',
 }
 
 Box.childOf = ['Page', 'Box']
 Box.lorrenTypes = {
+  debug: {
+    type: 'boolean',
+  },
+  break: {
+    type: 'boolean',
+  },
+  fixed: {
+    type: 'boolean',
+  },
+  wrap: {
+    type: 'boolean',
+  },
+  color: {
+    type: 'color',
+  },
+  fontSize: {
+    type: 'integer',
+  },
+  fontStyle: {
+    type: 'select',
+    options: ['normal', 'italic', 'oblique'],
+  },
+  fontWeight: {
+    type: 'select',
+    options: [
+      'thin',
+      'ultralight',
+      'light',
+      'normal',
+      'medium',
+      'semibold',
+      'bold',
+      'ultrabold',
+      'heavy',
+    ],
+  },
+  letterSpacing: {
+    type: 'float',
+    step: 0.1,
+  },
+  lineHeight: {
+    type: 'float',
+    step: 0.1,
+  },
+  textAlign: {
+    type: 'select',
+    options: ['left', 'center', 'justify', 'right'],
+  },
   direction: {
     type: 'select',
     initial: 'row',
@@ -287,7 +349,7 @@ Box.lorrenTypes = {
     initial: 'column',
     options: ['row', 'row-reverse', 'column', 'column-reverse'],
   },
-  wrap: {
+  flexWrap: {
     type: 'select',
     initial: 'nowrap',
     options: ['nowrap', 'wrap'],

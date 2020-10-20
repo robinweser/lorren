@@ -41,7 +41,7 @@ export default function Image({ src, description, height, ...props }) {
   return image
 }
 
-Image.childOf = ['Page', 'View']
+Image.childOf = ['Page', 'Box']
 Image.renderTreeInfo = (props) => (props.src ? props.src : '')
 Image.lorrenTypes = {
   src: {

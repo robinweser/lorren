@@ -1,5 +1,6 @@
 import React, { createContext, useContext } from 'react'
 import { Page as BasePage } from '@lorren/react-pdf-renderer'
+import { objectFilter } from 'fast-loops'
 
 import Box from './Box'
 
@@ -20,6 +21,32 @@ Page.childOf = ['Document']
 Page.displayName = 'Section'
 Page.renderTreeInfo = (props, theme, config) =>
   props.size + ' (' + props.orientation + ')'
+
+const blackListProps = [
+  'order',
+  'position',
+  'grow',
+  'shrink',
+  'basis',
+  'height',
+  'minHeight',
+  'maxHeight',
+  'width',
+  'minWidth',
+  'maxWidth',
+  'top',
+  'right',
+  'left',
+  'bottom',
+  'break',
+  'fixed',
+]
+
+const usedBoxTypes = objectFilter(
+  Box.lorrenTypes,
+  (_, key) => blackListProps.indexOf(key) === -1
+)
+
 Page.lorrenTypes = {
   size: {
     type: 'select',
@@ -110,5 +137,5 @@ Page.lorrenTypes = {
     type: 'boolean',
     initial: true,
   },
-  ...Box.lorrenTypes,
+  ...usedBoxTypes,
 }
