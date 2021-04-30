@@ -23,6 +23,7 @@
   "scripts": {
     "dev": "next dev",
     "clean": "rimraf lib es coverage",
+    "vercel-build": "yarn build && next build",
     "build": "yarn clean && yarn build:package",
     "build:package": "yarn build:es && yarn build:lib",
     "build:es": "babel src --out-dir es --ignore \"src/__tests__\" --copy-files",
