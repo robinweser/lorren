@@ -67,7 +67,7 @@ const theme = {
       borderLeftStyle: 'solid',
     },
     body: {
-      fontFamily: fonts.HEADING,
+      // fontFamily: fonts.HEADING,
       fontSize: 12,
       lineHeight: 1.2,
       color: colors.grey1,
@@ -81,7 +81,7 @@ const theme = {
     },
     heading1: {
       reference: 'heading',
-      fontFamily: fonts.HEADING,
+      // fontFamily: fonts.HEADING,
       fontWeight: 700,
       fontSize: 30,
       lineHeight: 1.4,
