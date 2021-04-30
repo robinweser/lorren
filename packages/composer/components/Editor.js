@@ -104,7 +104,7 @@ export default function Editor({ components, theme = {}, config = {} }) {
     theme
   )
 
-  const usedNodes = useDebounce(nodes, 500)
+  const usedNodes = useDebounce(nodes, 800)
 
   return (
     <Box direction="row">
@@ -256,6 +256,9 @@ export default function Editor({ components, theme = {}, config = {} }) {
             <label htmlFor="preview-visible">Show Preview</label>
           </Box>
         )}
+        {tab === 'preview' && !previewVisible ? (
+          <Box grow={1} extend={{ backgroundColor: 'rgb(220, 220, 220)' }} />
+        ) : null}
         {tab !== 'preview' || !didMount || !previewVisible ? null : (
           <PDFViewer
             key={timestamp}
@@ -448,20 +451,17 @@ export default function Editor({ components, theme = {}, config = {} }) {
           width: '60vw',
           borderLeft: '1px solid rgb(200, 200, 200)',
         }}>
-        <Box direction="row" padding={2} space={1.5}>
+        <Box direction="row" padding={2} space={1.5} minHeight={43}>
           {arrayMap(
             Object.keys(components).filter((type) => type !== 'Document'),
-            (type) => (
-              <Button
-                disabled={
-                  selectedType &&
-                  components[type].childOf &&
-                  components[type].childOf.indexOf(selectedType) === -1
-                }
-                onClick={() => addNodeByType(type)}>
-                {components[type].displayName || type}
-              </Button>
-            )
+            (type) =>
+              selectedType &&
+              components[type].childOf &&
+              components[type].childOf.indexOf(selectedType) === -1 ? null : (
+                <Button onClick={() => addNodeByType(type)}>
+                  {components[type].displayName || type}
+                </Button>
+              )
           )}
         </Box>
         <Box
@@ -625,8 +625,9 @@ export default function Editor({ components, theme = {}, config = {} }) {
           {lorrenTypes.hasOwnProperty('debug') && (
             <PropInput
               prop="debug"
+              key={'debug' + selected}
               type="boolean"
-              value={selectedNode.props.debug}
+              value={selectedNode.props.debug || false}
               setValue={(newValue) =>
                 setNodes((nodes) =>
                   updateNodeProp(nodes, selected, 'debug', newValue)

@@ -282,23 +282,23 @@ Box.lorrenTypes = {
   },
   borderBottomStyle: {
     type: 'select',
-    initial: 'none',
-    options: ['none', 'solid', 'dotted', 'dashed'],
+    initial: 'solid',
+    options: ['solid', 'dotted', 'dashed'],
   },
   borderLeftStyle: {
     type: 'select',
-    initial: 'none',
-    options: ['none', 'solid', 'dotted', 'dashed'],
+    initial: 'solid',
+    options: ['solid', 'dotted', 'dashed'],
   },
   borderTopStyle: {
     type: 'select',
-    initial: 'none',
-    options: ['none', 'solid', 'dotted', 'dashed'],
+    initial: 'solid',
+    options: ['solid', 'dotted', 'dashed'],
   },
   borderRightStyle: {
     type: 'select',
-    initial: 'none',
-    options: ['none', 'solid', 'dotted', 'dashed'],
+    initial: 'solid',
+    options: ['solid', 'dotted', 'dashed'],
   },
   borderBottomColor: {
     type: 'color',

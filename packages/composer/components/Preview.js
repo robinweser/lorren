@@ -74,7 +74,7 @@ function renderPDF(id = '__root', nodes, components, data, theme, config) {
     props.fixed &&
     props.text &&
     (props.text.indexOf('pageNumber') !== -1 ||
-      text.indexOf('totalPages') !== -1)
+      props.text.indexOf('totalPages') !== -1)
   ) {
     props.render = ({ pageNumber, totalPages }) => {
       const dynamicData = {

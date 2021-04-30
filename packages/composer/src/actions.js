@@ -1,6 +1,6 @@
 import { arrayReduce } from 'fast-loops'
 
-import getDefaultStyle from './getDefaultStyle'
+import getDefaultProps from './getDefaultProps'
 
 export function createNode(
   type,
@@ -9,7 +9,7 @@ export function createNode(
   data = {},
   children = []
 ) {
-  const defaultProps = getDefaultStyle(lorrenTypes)
+  const defaultProps = getDefaultProps(lorrenTypes)
 
   return {
     type,
@@ -168,6 +168,8 @@ export function removeNodeDataProp(nodes, nodeId, prop) {
 }
 
 export function updateNodeProp(nodes, nodeId, prop, value) {
+  console.log(nodeId, prop, value)
+
   return {
     ...nodes,
     [nodeId]: {

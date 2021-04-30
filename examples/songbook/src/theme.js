@@ -1,36 +1,3 @@
-import React from 'react'
-import {
-  Page as LorrenPage,
-  Document,
-  PDFViewer,
-  Box as LorrenBox,
-  Text,
-  Currency,
-  Line,
-  DateTime,
-  Link,
-  Image,
-  Spacer,
-  Markdown,
-} from '@lorren/core'
-import { Box } from 'kilvin'
-
-import Forms from '../components/Forms'
-
-const components = {
-  Page: LorrenPage,
-  Document,
-  Box: LorrenBox,
-  Text,
-  Currency,
-  Line,
-  Link,
-  DateTime,
-  Image,
-  Spacer,
-  Markdown,
-}
-
 const colors = {
   primary: 'red',
   secondary: 'blue',
@@ -52,10 +19,11 @@ const fonts = {
   },
 }
 
-const theme = {
+export default {
   colors,
   baselineGrid: 4,
 
+  fonts,
   typography: {
     quote: {
       fontFamily: 'Helvetica',
@@ -67,7 +35,7 @@ const theme = {
       borderLeftStyle: 'solid',
     },
     body: {
-      fontFamily: fonts.HEADING,
+      fontFamily: 'Helvetica',
       fontSize: 12,
       lineHeight: 1.2,
       color: colors.grey1,
@@ -77,22 +45,22 @@ const theme = {
       fontSize: 12,
       lineHeight: 1.4,
       color: colors.grey1,
-      marginBottom: 10,
+      marginBottom: 20,
     },
-    heading1: {
+    heading: {
       reference: 'heading',
       fontFamily: fonts.HEADING,
       fontWeight: 700,
       fontSize: 30,
       lineHeight: 1.4,
-      marginBottom: 10,
+      marginBottom: 15,
     },
-    heading2: {
+    subheading: {
       reference: 'subheading',
       fontFamily: fonts.HEADING,
       fontSize: 24,
       lineHeight: 1.2,
-      marginBottom: 10,
+      marginBottom: 20,
     },
   },
   styles: {
@@ -105,9 +73,3 @@ const theme = {
     },
   },
 }
-
-export default () => (
-  <Box padding={20}>
-    <Forms components={components} />
-  </Box>
-)

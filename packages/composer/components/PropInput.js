@@ -14,6 +14,7 @@ function PropInput({
   prop,
   empty = true,
   hidden = false,
+  shape,
   step = 1,
   value = '',
   setValue,
@@ -28,6 +29,26 @@ function PropInput({
 
   if (hidden) {
     return null
+  }
+
+  if (type === 'shape') {
+    return (
+      <Box space={1}>
+        <Box>{prop}</Box>
+        <Box space={1} paddingLeft={6}>
+          {Object.keys(shape).map((prop) => (
+            <PropInput
+              prop={prop}
+              {...shape[prop]}
+              value={value[prop]}
+              setValue={(newValue) => {
+                setValue({ ...value, [prop]: newValue })
+              }}
+            />
+          ))}
+        </Box>
+      </Box>
+    )
   }
 
   let input
@@ -46,10 +67,10 @@ function PropInput({
   } else if (type === 'boolean') {
     input = (
       <Box
-        type="checkbox"
         as="input"
+        type="checkbox"
         checked={value}
-        onChange={() => setValue(!value)}
+        onChange={(e) => setValue(!value)}
       />
     )
   } else if (type === 'integer' || type === 'float') {

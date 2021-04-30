@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "@lorren/example-simple",
-  "description": "A simple document with a table of contents",
+  "name": "@lorren/example-songbook",
+  "description": "A songbook with 3 songs and a table of contents",
   "scripts": {
     "prepare": "rm -rf dist && mkdir dist",
     "build": "yarn run prepare && babel-node scripts/build"

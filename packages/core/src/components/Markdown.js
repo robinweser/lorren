@@ -9,13 +9,26 @@ import Link from './Link'
 import Image from './Image'
 
 const ListContext = createContext({ start: 1 })
+let lastParagraphEnd
+
 const components = {
   root: ({ children }) => <Box>{children}</Box>,
   paragraph: ({ children }) => <Text intent="body">{children}</Text>,
   heading: ({ depth, children }) => (
     <Text intent={'heading' + depth}>{children}</Text>
   ),
-  text: ({ value }) => value.replace(/(%NEWLINE)/gi, '\n'),
+  text: ({ value, position }) => {
+    // we determine how many lines lay in between this text and the last paragraph to get the line breaks inbetween
+    let breaks = 0
+    if (lastParagraphEnd && position.start.line > lastParagraphEnd) {
+      breaks = position.start.line - lastParagraphEnd - 1
+    }
+
+    lastParagraphEnd = position.end.line
+
+    return '\n'.repeat(breaks) + value
+  },
+  break: () => '\n',
   emphasis: ({ children }) => <Text fontVariant="italic">{children}</Text>,
   strong: ({ children }) => <Text fontWeight="bold">{children}</Text>,
   listItem: ({ children }) => {
@@ -44,7 +57,7 @@ const components = {
   imageReference: ({ children }) => <Text>{children}</Text>,
 }
 
-function renderTree({ type, children = [], position, ...props }) {
+function renderTree({ type, children = [], ...props }) {
   // extract inline images to be block
   if (type === 'paragraph') {
     const splitted = children
@@ -83,7 +96,7 @@ function renderTree({ type, children = [], position, ...props }) {
 
 export default function Markdown({ text = '', children = text }) {
   try {
-    const nodes = parse(children.replace(/^   \n$/gi, '%NEWLINE'))
+    const nodes = parse(children)
     return renderTree(nodes)
   } catch (e) {
     console.log(e)
