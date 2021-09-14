@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { unstable_batchedUpdates } from 'react-dom'
 import { Box } from 'kilvin'
 import { arrayMap } from 'fast-loops'
-import { ThemeProvider, ConfigProvider, PDFViewer } from '@lorren/core'
+import { ThemeProvider, ConfigProvider, PDFViewer } from '@lorren-js/core'
 
 import Button from './Button'
 import PropInput from './PropInput'

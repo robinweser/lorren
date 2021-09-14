@@ -5,7 +5,7 @@ import {
   PDFDownloadLink,
   ThemeProvider,
   ConfigProvider,
-} from '@lorren/core'
+} from '@lorren-js/core'
 import { Box, Spacer } from 'kilvin'
 import { arrayMap, objectMap, objectReduce } from 'fast-loops'
 import { format as formatDateTime } from 'date-fns'

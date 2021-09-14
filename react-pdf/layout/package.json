@@ -1,5 +1,5 @@
 {
-  "name": "@lorren/react-pdf-layout",
+  "name": "@lorren-js/react-pdf-layout",
   "version": "0.1.1",
   "license": "MIT",
   "author": "Diego Muracciole <diegomuracciole@gmail.com>",
@@ -40,5 +40,5 @@
   "files": [
     "lib"
   ],
-  "gitHead": "64aaa2f6a3e90d76a1b09e82895c02690487a92a"
+  "gitHead": "8ace67bccce29ef6f028ffc3c1fedb42d5f91ab0"
 }

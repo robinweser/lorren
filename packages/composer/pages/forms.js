@@ -12,7 +12,7 @@ import {
   Image,
   Spacer,
   Markdown,
-} from '@lorren/core'
+} from '@lorren-js/core'
 import { Box } from 'kilvin'
 
 import Forms from '../components/Forms'

@@ -1,5 +1,5 @@
 import React, { createElement, memo } from 'react'
-import { useTheme, useConfig } from '@lorren/core'
+import { useTheme, useConfig } from '@lorren-js/core'
 import { objectReduce, arrayMap } from 'fast-loops'
 import { format as formatDateTime } from 'date-fns'
 import { shallowEqualArrays, shallowEqualObjects } from 'shallow-equal'

@@ -1,5 +1,5 @@
 {
-  "name": "@lorren/react-pdf-renderer",
+  "name": "@lorren-js/react-pdf-renderer",
   "version": "0.1.1",
   "license": "MIT",
   "typings": "index.d.ts",
@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.6.2",
-    "@lorren/react-pdf-layout": "^0.1.1",
+    "@lorren-js/react-pdf-layout": "^0.1.1",
     "@react-pdf/font": "^2.0.0-beta.14",
     "@react-pdf/pdfkit": "^1.4.2",
     "@react-pdf/primitives": "^2.0.0-beta.14",
@@ -64,5 +64,5 @@
       "pre-commit": "git add . && lint-staged"
     }
   },
-  "gitHead": "64aaa2f6a3e90d76a1b09e82895c02690487a92a"
+  "gitHead": "8ace67bccce29ef6f028ffc3c1fedb42d5f91ab0"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@lorren/core",
+  "name": "@lorren-js/core",
   "version": "0.1.1",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -33,7 +33,7 @@
     "coverage": "yarn test --coverage"
   },
   "dependencies": {
-    "@lorren/react-pdf-renderer": "^0.1.1",
+    "@lorren-js/react-pdf-renderer": "^0.1.1",
     "@mdx-js/react": "^1.6.18",
     "@mdx-js/runtime": "^1.6.18",
     "date-fns": "^2.16.1",
@@ -60,5 +60,5 @@
     "react": "^16.13.1",
     "rimraf": "^3.0.0"
   },
-  "gitHead": "64aaa2f6a3e90d76a1b09e82895c02690487a92a"
+  "gitHead": "8ace67bccce29ef6f028ffc3c1fedb42d5f91ab0"
 }
