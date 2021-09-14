@@ -1,5 +1,5 @@
 import React from 'react'
-import { Note as BaseNote } from '@lorren/react-pdf-renderer'
+import { Note as BaseNote } from '@lorren-js/react-pdf-renderer'
 
 import Box from './Box'
 

@@ -13,7 +13,7 @@ import {
   Fixed,
   PageNumber,
   Source,
-} from '@lorren/core'
+} from '@lorren-js/core'
 
 import Wrapper from './Wrapper'
 

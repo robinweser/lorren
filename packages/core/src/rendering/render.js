@@ -1,4 +1,4 @@
-import { render as baseRender } from '@lorren/react-pdf-renderer'
+import { render as baseRender } from '@lorren-js/react-pdf-renderer'
 
 import TestRenderer from 'react-test-renderer'
 

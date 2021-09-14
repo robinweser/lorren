@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link as BaseLink } from '@lorren/react-pdf-renderer'
+import { Link as BaseLink } from '@lorren-js/react-pdf-renderer'
 
 import Box from './Box'
 import Text from './Text'

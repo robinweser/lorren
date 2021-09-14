@@ -1,5 +1,5 @@
 import React from 'react'
-import { ThemeProvider, ConfigProvider, Text } from '@lorren/core'
+import { ThemeProvider, ConfigProvider, Text } from '@lorren-js/core'
 
 import theme from './theme'
 

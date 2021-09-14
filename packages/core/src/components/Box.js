@@ -1,5 +1,5 @@
 import React, { Children, Fragment } from 'react'
-import { View } from '@lorren/react-pdf-renderer'
+import { View } from '@lorren-js/react-pdf-renderer'
 
 import Spacer from './Spacer'
 import applyMultiplier from '../theming/applyMultipier'

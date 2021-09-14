@@ -9,14 +9,14 @@ import {
   Text,
   IMAGE_REFERENCE,
   SOURCE_REFERENCE,
-} from '@lorren/core'
+} from '@lorren-js/core'
 
 import MyDocument from '../src/Document'
 import Wrapper from '../src/Wrapper'
 
 renderWithIndex(
   <MyDocument />,
-  index => (
+  (index) => (
     <Wrapper>
       <Document>
         <Page padding="2cm">
@@ -71,7 +71,7 @@ renderWithIndex(
           <IndexTable
             index={index}
             include={[SOURCE_REFERENCE]}
-            container={props => <Box space={2.5} {...props} />}>
+            container={(props) => <Box space={2.5} {...props} />}>
             {({ content, index: count }) => (
               <Box key={content} space={2} direction="row">
                 <Text>[{count + 1}]</Text>

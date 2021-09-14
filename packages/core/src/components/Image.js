@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image as BaseImage } from '@lorren/react-pdf-renderer'
+import { Image as BaseImage } from '@lorren-js/react-pdf-renderer'
 
 import Box from './Box'
 

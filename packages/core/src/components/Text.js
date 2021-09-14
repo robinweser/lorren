@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text as BaseText } from '@lorren/react-pdf-renderer'
+import { Text as BaseText } from '@lorren-js/react-pdf-renderer'
 import { objectFilter } from 'fast-loops'
 
 import IndexReference from '../indexing/IndexReference'
