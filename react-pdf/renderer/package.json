@@ -63,5 +63,6 @@
     "hooks": {
       "pre-commit": "git add . && lint-staged"
     }
-  }
+  },
+  "gitHead": "64aaa2f6a3e90d76a1b09e82895c02690487a92a"
 }
