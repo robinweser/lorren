@@ -7,7 +7,7 @@
     "build": "yarn run prepare && babel-node scripts/build"
   },
   "dependencies": {
-    "@lorren/core": "^0.0.1",
+    "@lorren/core": "^0.1.0",
     "react": "^16.13.1"
   },
   "devDependencies": {
@@ -22,5 +22,6 @@
     "cross-env": "^6.0.3",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.0"
-  }
+  },
+  "version": "0.1.0"
 }

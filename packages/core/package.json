@@ -1,6 +1,6 @@
 {
   "name": "@lorren/core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "module": "es/index.js",
   "sideEffects": false,
@@ -33,7 +33,7 @@
     "coverage": "yarn test --coverage"
   },
   "dependencies": {
-    "@lorren/react-pdf-renderer": "^0.0.1",
+    "@lorren/react-pdf-renderer": "^0.1.0",
     "@mdx-js/react": "^1.6.18",
     "@mdx-js/runtime": "^1.6.18",
     "date-fns": "^2.16.1",
