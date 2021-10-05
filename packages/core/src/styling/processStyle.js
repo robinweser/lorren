@@ -1,6 +1,8 @@
-import fonts from './plugins/fonts'
+import font from './plugins/font'
+import typography from './plugins/typography'
+import themeValue from './plugins/themeValue'
 
-const plugins = [fonts]
+const plugins = [font, themeValue]
 
 export default function processStyle(style, theme) {
   return plugins.reduce(

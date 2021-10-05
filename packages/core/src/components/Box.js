@@ -1,5 +1,5 @@
 import React, { Children, Fragment } from 'react'
-import { View } from '@lorren-js/react-pdf-renderer'
+import { View } from '@react-pdf/renderer'
 
 import Spacer from './Spacer'
 import applyMultiplier from '../theming/applyMultipier'
@@ -21,7 +21,6 @@ export default function Box({
   marginRight,
   marginBottom,
   marginTop,
-  backgroundColor,
   borderTopColor,
   borderBottomColor,
   borderLeftColor,
@@ -63,6 +62,8 @@ export default function Box({
   letterSpacing,
   lineHeight,
   textAlign,
+  bg,
+  backgroundColor = bg,
   children,
   ...props
 }) {
@@ -74,7 +75,7 @@ export default function Box({
     flexWrap,
     flexGrow: grow,
     flexShrink: shrink,
-    flexBasis: basis || 'auto',
+    flexBasis: basis,
     flex,
     justifyContent,
     alignContent,
@@ -112,6 +113,7 @@ export default function Box({
     borderRightWidth,
     borderBottomWidth,
     borderLeftWidth,
+    backgroundColor,
     padding: spacing(padding),
     paddingLeft: spacing(paddingLeft),
     paddingRight: spacing(paddingRight),
@@ -141,14 +143,13 @@ export default function Box({
   )
 }
 
-Box.defaultProps = {
-  grow: 0,
-  shrink: 1,
-  basis: 'auto',
-  alignItems: 'stretch',
-  direction: 'column',
-  flexWrap: 'nowrap',
-}
+// Box.defaultProps = {
+//   grow: 0,
+//   shrink: 1,
+//   alignItems: 'stretch',
+//   direction: 'column',
+//   flexWrap: 'nowrap',
+// }
 
 Box.childOf = ['Page', 'Box']
 Box.lorrenTypes = {

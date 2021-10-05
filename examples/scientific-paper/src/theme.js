@@ -35,16 +35,22 @@ export default {
       borderLeftStyle: 'solid',
     },
     body: {
-      fontFamily: 'Helvetica',
+      fontFamily: fonts.HEADING,
       fontSize: 12,
       lineHeight: 1.2,
-      color: colors.grey1,
+      variants: {
+        standard: {
+          fontWeight: 400,
+        },
+        emphasis: {
+          fontWeight: 700,
+        },
+      },
     },
     paragraph: {
       fontFamily: 'Helvetica',
       fontSize: 12,
       lineHeight: 1.4,
-      color: colors.grey1,
       marginBottom: 20,
     },
     heading: {

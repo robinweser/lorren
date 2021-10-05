@@ -1,8 +1,8 @@
-import { Font } from '@lorren-js/react-pdf-renderer'
+import { Font } from '@react-pdf/renderer'
 
 const fontCache = {}
 
-export default function renderFonts(style) {
+export default function fontPlugin(style) {
   if (style.fontFamily && typeof style.fontFamily === 'object') {
     const { family, files, src } = style.fontFamily
 

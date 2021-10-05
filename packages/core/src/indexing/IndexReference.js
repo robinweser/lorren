@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text as BaseText } from '@lorren-js/react-pdf-renderer'
+import { Text as BaseText } from '@react-pdf/renderer'
 
 import useIndex from './useIndex'
 
@@ -20,8 +20,6 @@ export default function IndexReference({ reference, type, children }) {
             index.addIndex({ type, reference, value: pageNumber })
             setIsAdded(true)
           }
-
-          return 'Test'
         }}
       />
     </>

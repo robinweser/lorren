@@ -1,5 +1,5 @@
-import React from 'react'
-import { Text as BaseText } from '@lorren-js/react-pdf-renderer'
+import React, { createContext, useContext } from 'react'
+import { Text as BaseText } from '@react-pdf/renderer'
 import { objectFilter } from 'fast-loops'
 
 import IndexReference from '../indexing/IndexReference'
@@ -7,61 +7,56 @@ import useTheme from '../theming/useTheme'
 
 import Box from './Box'
 
+export const TextContext = createContext({})
+
+const defaultVariant = 'body'
+const defaultSubStyle = 'standard'
+const defaultColor = 'black'
+
 export default function Text({
   text: content = '',
   children,
-  intent,
   variant,
-  fontSize,
-  textAlign,
-  fontWeight,
+  subStyle,
   color,
-  lineHeight,
-  letterSpacing,
-  textDecorationColor,
-  textDecorationStyle,
-  textDecoration,
-  fontStyle,
+  align,
+  transform,
   style: customStyle,
   noReference,
   ...props
 }) {
   const theme = useTheme()
+  const { parentVariant, parentSubStyle, parentColor } = useContext(TextContext)
 
-  const {
-    reference,
-    textAlign: defaultTextAlign,
-    fontSize: defaultFontSize,
-    lineHeight: defaultLineHeight,
-    fontWeight: defaultFontWeight,
-    letterSpacing: defaultLetterSpacing,
-    fontStyle: defaultFontStyle,
-    color: defaultColor,
-    variants,
-    ...otherStyle
-  } = theme.typography[intent] || {}
+  const appliedVariant = variant || parentVariant || defaultVariant
+  const appliedSubStyle = subStyle || parentSubStyle || defaultSubStyle
+  const appliedColor = color || parentColor || defaultColor
+
+  const { reference, variants, ...fontStyles } = theme.typography[variant]
+  const standardStyle = (variants && variants.standard) || {}
+  const variantStyle = (variants && variants[appliedSubStyle]) || {}
 
   const style = {
-    ...otherStyle,
-    display: 'inline-flex',
-    textDecorationColor,
-    textDecorationStyle,
-    textDecoration,
-    color: color || defaultColor,
-    textAlign: textAlign || defaultTextAlign,
-    fontWeight: fontWeight || defaultFontWeight,
-    lineHeight: lineHeight || defaultLineHeight,
-    letterSpacing: letterSpacing || defaultLetterSpacing,
-    fontSize: fontSize || defaultFontSize,
-    fontStyle: fontStyle || defaultFontStyle,
-    ...(variants && variants[variant] ? variants[variant] : {}),
+    ...fontStyles,
+    ...standardStyle,
+    ...variantStyle,
+    color: appliedColor,
+    textAlign: align,
+    textTransform: transform,
     ...customStyle,
   }
 
   const text = (
     <Box as={BaseText} {...props} style={style}>
-      {content}
-      {children}
+      <TextContext.Provider
+        value={{
+          parentVariant: appliedVariant,
+          parentSubStyle: appliedSubStyle,
+          parentColor: appliedColor,
+        }}>
+        {content}
+        {children}
+      </TextContext.Provider>
     </Box>
   )
 
@@ -77,7 +72,7 @@ export default function Text({
 }
 
 Text.defaultProps = {
-  intent: 'body',
+  variant: 'body',
   text: '',
 }
 

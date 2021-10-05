@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image as BaseImage } from '@lorren-js/react-pdf-renderer'
+import { Image as BaseImage, View } from '@react-pdf/renderer'
 
 import Box from './Box'
 
@@ -20,9 +20,9 @@ export default function Image({ src, description, height, ...props }) {
   const image = (
     <Box
       as={BaseImage}
-      alignSelf={height ? 'flex-start' : undefined}
-      height={height}
       src={src}
+      height={height}
+      alignSelf={height ? 'flex-start' : undefined}
       {...props}
     />
   )
@@ -30,7 +30,7 @@ export default function Image({ src, description, height, ...props }) {
   if (description) {
     return (
       <IndexReference reference={description} type={IMAGE}>
-        <Box style={styles.imageContainer}>
+        <Box wrap={false} style={styles.imageContainer}>
           {image}
           <Renderers.imageDescription description={description} />
         </Box>

@@ -14,7 +14,10 @@ export default function renderWithIndex(document, renderFn, path) {
   const indexPath = segments.slice(0, segments.length - 1).join('/')
 
   render(
-    <IndexProvider onDone={(index) => render(renderFn(index), path)}>
+    <IndexProvider
+      onDone={(index) => {
+        setTimeout(() => render(renderFn(index), path), 0)
+      }}>
       <Document>
         {document}
         <Page>
@@ -22,6 +25,6 @@ export default function renderWithIndex(document, renderFn, path) {
         </Page>
       </Document>
     </IndexProvider>,
-    indexPath + '/.lorren-index.json'
+    indexPath + '/.lorren-index'
   )
 }

@@ -20,7 +20,7 @@ renderWithIndex(
     <Wrapper>
       <Document>
         <Page padding="2cm">
-          <Text intent="heading">Inhaltsverzeichnis</Text>
+          <Text variant="heading">Inhaltsverzeichnis</Text>
           <Spacer size={5} />
           <IndexTable index={index} include={['heading', 'subheading']}>
             {({ type, content, pageNumber }) => (
@@ -42,7 +42,7 @@ renderWithIndex(
           </IndexTable>
         </Page>
         <Page padding="2cm">
-          <Text intent="heading">Abbildungsverzeichnis</Text>
+          <Text variant="heading">Abbildungsverzeichnis</Text>
           <Spacer size={5} />
           <IndexTable index={index} include={[IMAGE_REFERENCE]}>
             {({ content, pageNumber }) => (
@@ -65,7 +65,7 @@ renderWithIndex(
 
         <MyDocument />
         <Page padding="2cm">
-          <Text intent="heading">Quellenverzeichnis</Text>
+          <Text variant="heading">Quellenverzeichnis</Text>
           <Spacer size={5} />
 
           <IndexTable

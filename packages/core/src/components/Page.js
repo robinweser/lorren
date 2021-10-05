@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react'
-import { Page as BasePage } from '@lorren-js/react-pdf-renderer'
+import { Page as BasePage } from '@react-pdf/renderer'
 import { objectFilter } from 'fast-loops'
 
 import Box from './Box'

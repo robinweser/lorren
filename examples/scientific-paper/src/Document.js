@@ -22,15 +22,14 @@ export default function Document() {
     <Wrapper>
       <Page padding="2cm">
         <Box>
-          <Text intent="heading">1. Einleitung</Text>
-          <Text intent="subheading">
+          <Text variant="heading">1. Einleitung</Text>
+          <Text variant="subheading">
             1.1. Hinführung zum Thema<Text>Hello</Text>
           </Text>
-
           <Text>
             Hello <Text>Hello</Text>
           </Text>
-          <Text intent="paragraph">
+          <Text variant="paragraph">
             Seit etwa zehn Jahren rückt eine bestimmte Plattform immer weiter in
             den Vordergrund. Es handelt sich um das mobile Endgerät, sprich
             Smartphone und Tablet.
@@ -61,17 +60,17 @@ export default function Document() {
           </Text>
 
           <Image
-            height={240}
+            height={200}
             src="https://react-pdf.org/images/quijote2.png"
             description="Abbildung 1: Quijote"
           />
         </Box>
         <Box break>
-          <Text intent="subheading">
+          <Text variant="subheading">
             1.2. Zielsetzung und geplantes Vorgehen
           </Text>
           <Note>Foo</Note>
-          <Text intent="paragraph">Blablablabla</Text>
+          <Text variant="paragraph">Blablablabla</Text>
           <Currency>4.25</Currency>
           <List>
             <ListItem>Hello</ListItem>
@@ -95,6 +94,12 @@ export default function Document() {
             <ListItem>Hello</ListItem>
             <ListItem>Foo</ListItem>
           </List>
+          <Text color="primary">
+            Hello{' '}
+            <Text subStyle="emphasis" color="secondary">
+              World
+            </Text>
+          </Text>
           <Text
             style={{
               color: '#bbbbbb66',
@@ -115,8 +120,11 @@ export default function Document() {
             }}>
             Hello
           </Text>
-          <Text intent="quote">"Cooles Quote"</Text>
-          <DateTime format="dd.MM.yyyy kk:mm" />
+          <Text variant="quote">"Cooles Quote"</Text>
+          <DateTime format="DDD dd-MM-yyyy hh:mm:ss" />
+          <DateTime locale="sv-SE" format="dd MMMM yyyy">
+            {new Date('03/03/2021')}
+          </DateTime>
           <Source value="Hans Peter, 7. Auflage, Seite 1-15, https://www.foo.bar/baz">
             <Text>[1]</Text>
           </Source>
@@ -126,11 +134,11 @@ export default function Document() {
           <Source value="Jürgen Peter, 7. Auflage, Seite 1-15, https://www.foo.bar/baz; vgl. Peter hans, Seite 10256 auf Seite 12 mit Aufglage hahah und so weiter und so fort" />
         </Box>
         <Box break>
-          <Text intent="heading">2. Anforderungsanalyse</Text>
-          <Text intent="subheading">2.1. Technische Anforderungen</Text>
-          <Text intent="paragraph">Blablabla</Text>
-          <Text intent="subheading">2.2. Personelle Anforderungen</Text>
-          <Text intent="paragraph">Blablabla</Text>
+          <Text variant="heading">2. Anforderungsanalyse</Text>
+          <Text variant="subheading">2.1. Technische Anforderungen</Text>
+          <Text variant="paragraph">Blablabla</Text>
+          <Text variant="subheading">2.2. Personelle Anforderungen</Text>
+          <Text variant="paragraph">Blablabla</Text>
         </Box>
         <Image
           src="https://react-pdf.org/images/quijote2.png"
@@ -144,7 +152,6 @@ export default function Document() {
           style={{
             textAlign: 'right',
             fontSize: 12,
-            minHeight: 16,
             justifyContent: 'flex-end',
           }}>
           {({ pageNumber, totalPages, subPageNumber, subPageTotalPages }) =>

@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "0.1.4",
   "name": "@lorren/example-scientific-paper",
   "description": "A scientific paper with references and sources",
   "scripts": {
@@ -22,6 +23,5 @@
     "cross-env": "^6.0.3",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.0"
-  },
-  "version": "0.1.4"
+  }
 }
