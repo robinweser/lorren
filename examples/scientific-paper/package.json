@@ -1,6 +1,6 @@
 {
   "private": true,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "name": "@lorren/example-scientific-paper",
   "description": "A scientific paper with references and sources",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "yarn run prepare && babel-node scripts/build"
   },
   "dependencies": {
-    "@lorren-js/core": "^0.2.0",
+    "@lorren-js/core": "^0.2.1",
     "react": "^17.0.0"
   },
   "devDependencies": {
