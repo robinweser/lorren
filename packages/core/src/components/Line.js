@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Box from './Box'
 
@@ -14,18 +15,8 @@ export default function Line({ size = 1, color = 'black', width = '100%' }) {
   )
 }
 
-Line.childOf = ['Page', 'Box']
-Line.lorrenTypes = {
-  size: {
-    type: 'integer',
-    initial: 1,
-  },
-  color: {
-    type: 'color',
-    initial: 'black',
-  },
-  width: {
-    type: 'unit',
-    initial: '100%',
-  },
+Line.propTypes = {
+  size: PropTypes.number,
+  color: PropTypes.string,
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }

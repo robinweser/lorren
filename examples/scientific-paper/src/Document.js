@@ -123,7 +123,7 @@ export default function Document() {
           <Text variant="quote">"Cooles Quote"</Text>
           <DateTime format="DDD dd-MM-yyyy hh:mm:ss" />
           <DateTime locale="sv-SE" format="dd MMMM yyyy">
-            {new Date('03/03/2021')}
+            03/03/2021
           </DateTime>
           <Source value="Hans Peter, 7. Auflage, Seite 1-15, https://www.foo.bar/baz">
             <Text>[1]</Text>
@@ -144,16 +144,7 @@ export default function Document() {
           src="https://react-pdf.org/images/quijote2.png"
           description="Abbildung 2: Quijote"
         />
-        <Fixed
-          as={Text}
-          bottom={4}
-          right={4}
-          left={4}
-          style={{
-            textAlign: 'right',
-            fontSize: 12,
-            justifyContent: 'flex-end',
-          }}>
+        <Fixed as={Text} bottom={4} right={4}>
           {({ pageNumber, totalPages, subPageNumber, subPageTotalPages }) =>
             subPageNumber ? subPageNumber : ''
           }

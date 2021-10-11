@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
 
 export default function IndexTable({
   index,
@@ -13,4 +14,15 @@ export default function IndexTable({
     )
 
   return <Container>{elements}</Container>
+}
+
+IndexTable.propTypes = {
+  index: PropTypes.array,
+  include: PropTypes.arrayOf(PropTypes.string),
+  container: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.element,
+    PropTypes.elementType,
+    PropTypes.func,
+  ]),
 }

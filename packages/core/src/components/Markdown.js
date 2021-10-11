@@ -99,18 +99,8 @@ export default function Markdown({ text = '', children = text }) {
     const nodes = parse(children)
     return renderTree(nodes)
   } catch (e) {
-    console.log(e)
+    console.error(`Lorren Rendering: Parsing markdown failed.`)
   }
 
   return null
-}
-
-Markdown.childOf = ['Page', 'Box']
-Markdown.lorrenTypes = {
-  text: {
-    type: 'string',
-    initial: '',
-    multiline: true,
-    variable: true,
-  },
 }

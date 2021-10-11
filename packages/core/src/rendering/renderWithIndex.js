@@ -1,4 +1,6 @@
 import React from 'react'
+import { renderToString } from '@react-pdf/renderer'
+
 import render from './render'
 
 import Document from '../components/Document'
@@ -9,22 +11,18 @@ import IndexProvider from '../indexing/IndexProvider'
 
 import { FILE_END } from '../indexing/indexTokens'
 
-export default function renderWithIndex(document, renderFn, path) {
-  const segments = path.split('/')
-  const indexPath = segments.slice(0, segments.length - 1).join('/')
-
-  render(
+export default function renderWithIndex(document, renderFn, path, callback) {
+  renderToString(
     <IndexProvider
-      onDone={(index) => {
-        setTimeout(() => render(renderFn(index), path), 0)
-      }}>
+      onDone={(index) =>
+        setTimeout(() => render(renderFn(index), path, callback), 0)
+      }>
       <Document>
         {document}
         <Page>
           <IndexReference type={FILE_END} />
         </Page>
       </Document>
-    </IndexProvider>,
-    indexPath + '/.lorren-index'
+    </IndexProvider>
   )
 }

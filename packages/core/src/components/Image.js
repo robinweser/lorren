@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Image as BaseImage, View } from '@react-pdf/renderer'
 
 import Box from './Box'
@@ -41,23 +42,10 @@ export default function Image({ src, description, height, ...props }) {
   return image
 }
 
-Image.childOf = ['Page', 'Box']
-Image.renderTreeInfo = (props) => (props.src ? props.src : '')
-Image.lorrenTypes = {
-  src: {
-    type: 'url',
-  },
-  description: {
-    type: 'string',
-  },
-  height: {
-    type: 'unit',
-  },
-  width: {
-    type: 'unit',
-  },
-  cache: {
-    type: 'boolean',
-    initial: true,
-  },
+Image.propTypes = {
+  src: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  cache: PropTypes.bool,
 }

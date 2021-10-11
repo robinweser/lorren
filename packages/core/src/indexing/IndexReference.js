@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+
 import { Text as BaseText } from '@react-pdf/renderer'
 
 import useIndex from './useIndex'
@@ -24,4 +26,9 @@ export default function IndexReference({ reference, type, children }) {
       />
     </>
   )
+}
+
+IndexReference.propTypes = {
+  reference: PropTypes.node,
+  type: PropTypes.string,
 }

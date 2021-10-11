@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 
 import Text from './Text'
 import Box from './Box'
@@ -28,4 +29,8 @@ export default function ListItem({ children, marker: customMarker, ...props }) {
       </Renderers.listItem>
     </Box>
   )
+}
+
+ListItem.propTypes = {
+  marker: PropTypes.oneOfType([PropTypes.array, PropTypes.node]),
 }

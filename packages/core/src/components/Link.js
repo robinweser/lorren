@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link as BaseLink } from '@react-pdf/renderer'
 
 import Box from './Box'
@@ -18,17 +19,7 @@ export default function Link({ src, ...props }) {
   )
 }
 
-const { text, ...textTypes } = Text.lorrenTypes({ typography: {} })
-
-Link.childOf = ['Page', 'Box', 'Text']
-Link.lorrenTypes = {
-  src: {
-    type: 'url',
-  },
-  ...textTypes,
-  textDecoration: {
-    type: 'select',
-    initial: 'underline',
-    options: ['none', 'underline', 'line-through'],
-  },
+Link.propTypes = {
+  ...Text.propTypes,
+  src: PropTypes.string,
 }

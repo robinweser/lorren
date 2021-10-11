@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import IndexReference from '../indexing/IndexReference'
 import useIndex from '../indexing/useIndex'
@@ -14,6 +15,7 @@ export default function Source({ value, children }) {
 
   if (!value) {
     // TODO: log error
+    console.error('Lorren Rendering: Source was rendered without a value.')
     return null
   }
 
@@ -39,9 +41,6 @@ export default function Source({ value, children }) {
   )
 }
 
-Source.childOf = ['Page', 'Box', 'Text']
-Source.lorrenTypes = {
-  value: {
-    type: 'string',
-  },
+Source.propTypes = {
+  value: PropTypes.string,
 }

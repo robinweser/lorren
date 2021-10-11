@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   renderWithIndex,
+  render,
   IndexTable,
   Document,
   Page,
@@ -83,5 +84,6 @@ renderWithIndex(
       </Document>
     </Wrapper>
   ),
-  `${__dirname}/../dist/Document.pdf`
+  `${__dirname}/../dist/output.pdf`,
+  (props) => console.log('Successfully rendered the scientific paper example.')
 )

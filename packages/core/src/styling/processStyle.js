@@ -1,5 +1,4 @@
 import font from './plugins/font'
-import typography from './plugins/typography'
 import themeValue from './plugins/themeValue'
 
 const plugins = [font, themeValue]

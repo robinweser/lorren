@@ -6,3 +6,8 @@ import Box from './Box'
 export default function Note(props) {
   return <Box as={BaseNote} {...props} />
 }
+
+Note.propTypes = {
+  ...BaseNote.propTypes,
+  ...Box.propTypes,
+}

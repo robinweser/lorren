@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 import IndexContext from './IndexContext'
 import { FILE_END } from './indexTokens'
@@ -39,4 +40,8 @@ export default function IndexProvider({ onDone, children }) {
   }
 
   return <IndexContext.Provider value={api}>{children}</IndexContext.Provider>
+}
+
+IndexProvider.propTypes = {
+  onDone: PropTypes.func,
 }

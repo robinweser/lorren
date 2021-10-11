@@ -1,4 +1,5 @@
 import React, { useContext, createContext } from 'react'
+import PropTypes from 'prop-types'
 
 import Box from './Box'
 
@@ -25,4 +26,8 @@ export default function List({ children, ident, style, ...props }) {
       </Box>
     </ListContext.Provider>
   )
+}
+
+List.propTypes = {
+  ident: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, createContext, useContext } from 'react'
+import PropTypes from 'prop-types'
 import { objectMergeDeep } from 'fast-loops'
 
 import ThemeContext from './ThemeContext'
@@ -19,4 +20,9 @@ export default function ThemeProvider({
   )
 
   return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+}
+
+ThemeProvider.propTypes = {
+  theme: PropTypes.object,
+  overwrite: PropTypes.bool,
 }

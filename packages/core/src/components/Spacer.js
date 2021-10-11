@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Box from './Box'
 import applyMultiplier from '../theming/applyMultipier'
@@ -12,10 +13,6 @@ export default function Spacer({ size = 1, debug }) {
   return <Box debug={debug} width={spacing(size)} height={spacing(size)} />
 }
 
-Spacer.childOf = ['Page', 'Box']
-Spacer.lorrenTypes = {
-  size: {
-    type: 'unit',
-    initial: 1,
-  },
+Spacer.propTypes = {
+  size: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }

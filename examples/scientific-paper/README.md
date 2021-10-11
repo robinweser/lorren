@@ -1,2 +1,3 @@
-# recipes
-My private recipes collection
+# Lorren Example: Scientific Paper
+
+Tbd.

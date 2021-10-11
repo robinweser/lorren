@@ -1,4 +1,5 @@
-import React, { createElement } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import Box from './Box'
 
@@ -33,4 +34,11 @@ export default function Fixed({
       render={typeof children === 'function' ? children : () => children}
     />
   )
+}
+
+Fixed.propTypes = {
+  top: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  right: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  bottom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  left: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
