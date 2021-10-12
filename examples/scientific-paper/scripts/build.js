@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   renderWithIndex,
-  render,
   IndexTable,
   Document,
   Page,

@@ -28,6 +28,7 @@ import IndexTable from './indexing/IndexTable'
 import { IMAGE, SOURCE, LINK } from './indexing/indexTokens'
 
 import render from './rendering/render'
+import renderAll from './rendering/renderAll'
 import renderWithIndex from './rendering/renderWithIndex'
 import PDFViewer from './rendering/PDFViewer'
 import PDFDownloadLink from './rendering/PDFDownloadLink'
@@ -62,6 +63,7 @@ export {
   IndexReference,
   IndexTable,
   render,
+  renderAll,
   renderWithIndex,
   PDFViewer,
   PDFDownloadLink,
