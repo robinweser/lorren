@@ -32,13 +32,14 @@ export default function Text({
   const appliedSubStyle = subStyle || parentSubStyle || defaultSubStyle
   const appliedColor = color || parentColor || defaultColor
 
-  if (!theme.typography[variant]) {
+  if (!theme.typography[appliedVariant]) {
     console.error(
-      `Lorren Rendering: An unknown variant "${variant}" was passed to Text.`
+      `Lorren Rendering: An unknown variant "${appliedVariant}" was passed to Text.`
     )
   }
 
-  const { reference, variants, ...fontStyles } = theme.typography[variant]
+  const { reference, variants, ...fontStyles } =
+    theme.typography[appliedVariant]
   const variantStyle = (variants && variants[appliedSubStyle]) || {}
 
   const style = {
