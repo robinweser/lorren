@@ -76,7 +76,6 @@ export default function Text({
 }
 
 Text.defaultProps = {
-  variant: 'body',
   children: '',
 }
 
